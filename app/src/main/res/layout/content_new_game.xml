@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.greativy.leo14.NewGameActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_GameTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="15">
+
+        <EditText
+            android:id="@+id/editText_GameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="@string/test"
+            android:hint="@string/game_title"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_Player1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/input_layout_GameTitle"
+        android:layout_below="@+id/input_layout_GameTitle">
+
+        <EditText
+            android:id="@+id/editText_Player1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="@string/test"
+            android:hint="@string/Player1"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_Player2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/input_layout_Player1"
+        android:layout_toEndOf="@+id/input_layout_Player1">
+
+        <EditText
+            android:id="@+id/editText_Player2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/input_layout_Player1"
+            android:layout_alignStart="@+id/input_layout_Player3"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="@string/test"
+            android:hint="@string/Player2"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_Player3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_layout_Player1">
+
+        <EditText
+            android:id="@+id/editText_Player3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_layout_Player1"
+            android:ems="10"
+            android:text="@string/test"
+            android:hint="@string/Player3"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_Player4"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/input_layout_Player3"
+        android:layout_below="@+id/input_layout_Player2">
+        <EditText
+            android:id="@+id/editText_Player4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="@string/test"
+            android:hint="@string/Player4"
+            android:inputType="textPersonName"
+            android:layout_below="@+id/input_layout_Player2"
+            android:layout_toEndOf="@+id/input_layout_Player3" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/button_Submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_Cancel"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/button_Cancel"
+        android:text="@string/btn_submit"
+        android:theme="@style/MyButton" />
+
+    <Button
+        android:id="@+id/button_Cancel"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/btn_cancel"
+        android:theme="@style/MyCancelButton" />
+
+
+
+
+
+</RelativeLayout>
