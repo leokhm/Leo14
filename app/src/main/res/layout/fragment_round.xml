@@ -24,12 +24,20 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/id_txt_your_name"
         android:text="ok" />
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker_name"
+        android:layout_alignTop="@+id/numberPicker_score"
+        android:layout_toStartOf="@+id/numberPicker_score" />
 
     <NumberPicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberPicker"
+        android:id="@+id/numberPicker_score"
         android:layout_below="@+id/id_sure_edit_name"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>

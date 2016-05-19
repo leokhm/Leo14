@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -71,6 +72,15 @@ public class TabBFragment extends Fragment {
             RecyclerView recyclerView =(RecyclerView) view.findViewById(R.id.recyclerview_sgame);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+            String player1 = this.getArguments().getString("player1");
+            String player2 = this.getArguments().getString("player2");
+            String player3 = this.getArguments().getString("player3");
+            String player4 = this.getArguments().getString("player4");
+            Toast.makeText(getActivity(), player1, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), player2, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), player3, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), player4, Toast.LENGTH_LONG).show();
+
 
             singleGameDAO = new SingleGameDAO(getActivity().getApplicationContext());
             if (singleGameDAO.getCount() == 0) {

@@ -53,6 +53,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         setContentView(R.layout.activity_single_game);
         fab();
         toolbar();
+
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -62,12 +63,22 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         Intent intent = getIntent();
         GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
 
+
         fragmentManager = getSupportFragmentManager();//Get Fragment Manager
         Bundle bundle = new Bundle();
+        bundle.putString("player1", item.getPlayer1());
+        bundle.putString("player2", item.getPlayer2());
+        bundle.putString("player3", item.getPlayer3());
+        bundle.putString("player4", item.getPlayer4());
+
         bundle.putString("edittext", "from activity");
         Fragment fragment = new Fragment();
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.tabs, fragment).commit();//now replace the argument fragment
+
+        setTitle(item.getGameTitle());
+
+
 
 
 
@@ -83,8 +94,6 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
                     NewRoundDialogFragment editNameDialog = new NewRoundDialogFragment();
                     editNameDialog.show(getSupportFragmentManager(), "EditNameDialog");
