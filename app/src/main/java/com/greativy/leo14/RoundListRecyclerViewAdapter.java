@@ -43,6 +43,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         SingleGameItem item = sGameItems.get(position);
+
         //viewHolder.mIdView.setText(mValues.get(position).id);
         //viewHolder.mContentView.setText(mValues.get(position).content);
         viewHolder.mIdView.setText(item.getGameType());

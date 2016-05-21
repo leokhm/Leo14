@@ -1,6 +1,7 @@
 package com.greativy.leo14;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -65,21 +67,28 @@ public class TabBFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_b_list, container, false);
-
+        Intent intent = getActivity().getIntent();
+        GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView =(RecyclerView) view.findViewById(R.id.recyclerview_sgame);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            String player1 = this.getArguments().getString("player1");
-            String player2 = this.getArguments().getString("player2");
-            String player3 = this.getArguments().getString("player3");
-            String player4 = this.getArguments().getString("player4");
-            Toast.makeText(getActivity(), player1, Toast.LENGTH_LONG).show();
-            Toast.makeText(getActivity(), player2, Toast.LENGTH_LONG).show();
-            Toast.makeText(getActivity(), player3, Toast.LENGTH_LONG).show();
-            Toast.makeText(getActivity(), player4, Toast.LENGTH_LONG).show();
+
+
+            //setText for 4 players names
+            TextView tv_Bplayer1 = (TextView) view.findViewById(R.id.tv_DBplayer1);
+            TextView tv_Bplayer2 = (TextView) view.findViewById(R.id.tv_DBplayer2);
+            TextView tv_Bplayer3 = (TextView) view.findViewById(R.id.tv_DBplayer3);
+            TextView tv_Bplayer4 = (TextView) view.findViewById(R.id.tv_DBplayer4);
+
+            //TODO fix NPE
+            //tv_Bplayer1.setText(item.getPlayer1());
+            //tv_Bplayer2.setText(item.getPlayer2());
+            //tv_Bplayer3.setText(item.getPlayer3());
+            //tv_Bplayer4.setText(item.getPlayer4());
+
 
 
             singleGameDAO = new SingleGameDAO(getActivity().getApplicationContext());

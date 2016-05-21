@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener,TabBFragment.OnItemClickListener {
@@ -31,7 +29,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private mFragmentPagerAdapter mMFragmentPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -53,16 +51,12 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         setContentView(R.layout.activity_single_game);
         fab();
         toolbar();
+        viewPagerNtabs();
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mTabs = (TabLayout) findViewById(R.id.tabs);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mTabs.setupWithViewPager(mViewPager);
 
         Intent intent = getIntent();
         GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
-
+        setTitle(item.getGameTitle());
 
         fragmentManager = getSupportFragmentManager();//Get Fragment Manager
         Bundle bundle = new Bundle();
@@ -70,19 +64,26 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         bundle.putString("player2", item.getPlayer2());
         bundle.putString("player3", item.getPlayer3());
         bundle.putString("player4", item.getPlayer4());
-
         bundle.putString("edittext", "from activity");
         Fragment fragment = new Fragment();
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.tabs, fragment).commit();//now replace the argument fragment
 
-        setTitle(item.getGameTitle());
 
 
 
 
 
     }
+
+    private void viewPagerNtabs() {
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTabs = (TabLayout) findViewById(R.id.tabs);
+        mMFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mMFragmentPagerAdapter);
+        mTabs.setupWithViewPager(mViewPager);
+    }
+
 
     public void toolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -166,9 +167,9 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class mFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public mFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
