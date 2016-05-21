@@ -56,8 +56,6 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
         viewHolder.tv_player3.setText(mGameListItem.getPlayer3());
         viewHolder.tv_player4.setText(mGameListItem.getPlayer4());
 
-
-        //viewHolder.mContentView.setText(item.getPlayer1RoundScore());
         /**viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             /**
             @Override

@@ -156,7 +156,7 @@ public class MainListActivity extends AppCompatActivity {
 
     }
 
-    /** depreciated for custom arrayadapter
+    /* depreciated for custom arrayadapter
      * private void tempGamelist() {
      * //temporary adapter
      * listData.add("test1");

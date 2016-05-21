@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener,TabBFragment.OnItemClickListener {
 
@@ -56,7 +57,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         Intent intent = getIntent();
         GameListItem item = (GameListItem) intent.getExtras().getSerializable("GameListItem");
         setTitle(item.getGameTitle());
-
+        Toast.makeText(getApplicationContext(), String.valueOf(item.getId()),Toast.LENGTH_LONG).show();
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
         mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(),item);

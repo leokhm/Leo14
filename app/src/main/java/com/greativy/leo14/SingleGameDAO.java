@@ -150,15 +150,17 @@ public class SingleGameDAO {
         result.setPlayer4RoundScore(cursor.getInt(7));*/
         //    public SingleGameItem(long id, long gameId, String gameType, Integer roundScoreType, Integer player1RoundScore, Integer player2RoundScore, Integer player3RoundScore, Integer player4RoundScore) {
 
-        SingleGameItem item1 = new SingleGameItem(0, 1, "gdmj0", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item1 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
 
-        SingleGameItem item2 = new SingleGameItem(1, 2, "gdmj1", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item3 = new SingleGameItem(2, 3, "gdmj2", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item4 = new SingleGameItem(3, 4, "gdmj3", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item5 = new SingleGameItem(0, 1, "gdmj4", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item6 = new SingleGameItem(0, 1, "gdmj5", 0 , 24, 0 , 0 , -24 );
-
-
+        SingleGameItem item2 = new SingleGameItem(1, 2, "gdmj2", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item3 = new SingleGameItem(2, 3, "gdmj3", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item4 = new SingleGameItem(3, 4, "gdmj4", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item5 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item6 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item7 = new SingleGameItem(3, 5, "gdmj4", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item8 = new SingleGameItem(3, 6, "gdmj4", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item9 = new SingleGameItem(3, 7, "gdmj4", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item10 = new SingleGameItem(3, 8, "gdmj4", 0 , 24, 0 , 0 , -24 );
 
 
         insert(item1);
@@ -167,6 +169,15 @@ public class SingleGameDAO {
         insert(item4);
         insert(item5);
         insert(item6);
+        insert(item7);
+        insert(item8);
+        insert(item9);
+
+        insert(item10);
+
+
+
+
 
 
     }

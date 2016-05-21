@@ -97,7 +97,7 @@ public class TabBFragment extends Fragment {
             if (singleGameDAO.getCount() == 0) {
                 singleGameDAO.sample();
             }
-            items = singleGameDAO.getAllByGameId(1);
+            items = singleGameDAO.getAllByGameId(mGameListItem.getId());
 
 
             roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
