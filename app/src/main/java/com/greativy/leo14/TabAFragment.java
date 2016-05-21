@@ -1,10 +1,10 @@
 package com.greativy.leo14;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,43 +20,42 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class TabAFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-   // private String mParam1;
-    //private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Bundle bundle;
+    private GameListItem mGameListItem;
+    private String KEY_GAMELISTITEM = "GameListItem";
+    private String gameTitle;
+    private String player1;
+    private String player2;
+    private String player3;
+    private String player4;
+
 
     public TabAFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * //@param param1 Parameter 1.
-     * //@param param2 Parameter 2.
-     * @return A new instance of fragment TabAFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TabAFragment newInstance() {
         TabAFragment fragment = new TabAFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        //Bundle args = new Bundle();
+        //fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
+            bundle = getArguments();
+            mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
+            gameTitle = mGameListItem.getGameTitle();
+            player1 = mGameListItem.getPlayer1();
+            player2 = mGameListItem.getPlayer2();
+            player3 = mGameListItem.getPlayer3();
+            player4 = mGameListItem.getPlayer4();
+
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -68,8 +67,6 @@ public class TabAFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tab_a, container, false);
 
-        Intent intent = getActivity().getIntent();
-        GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
         TextView tv_gameTitle = (TextView) view.findViewById(R.id.tv_DGameTitle);
         TextView tv_player1 = (TextView) view.findViewById(R.id.tv_DPlayer1);
         TextView tv_player2 = (TextView) view.findViewById(R.id.tv_DPlayer2);
@@ -81,21 +78,22 @@ public class TabAFragment extends Fragment {
         TextView tv_player4FinalScore = (TextView) view.findViewById(R.id.tv_DPlayer4FinalScore);
 
 
-        tv_gameTitle.setText(item.getGameTitle());
-        tv_player1.setText(item.getPlayer1());
-        tv_player2.setText(item.getPlayer2());
-        tv_player3.setText(item.getPlayer3());
-        tv_player4.setText(item.getPlayer4());
-
+        tv_gameTitle.setText(gameTitle);
+        tv_player1.setText(player1);
+        tv_player2.setText(player2);
+        tv_player3.setText(player3);
+        tv_player4.setText(player4);
         tv_player1FinalScore.setText(String.valueOf(0));
         tv_player2FinalScore.setText(String.valueOf(0));
-        tv_player3FinalScore.setText(String.valueOf(item.getPlayer3FinalScore()));
-        tv_player4FinalScore.setText(String.valueOf(item.getPlayer4FinalScore()));
+        tv_player3FinalScore.setText(String.valueOf(mGameListItem.getPlayer3FinalScore()));
+        tv_player4FinalScore.setText(String.valueOf(mGameListItem.getPlayer4FinalScore()));
+
+
         /**
-        tv_player1FinalScore.setText(item.getPlayer1FinalScore());
-        tv_player2FinalScore.setText(item.getPlayer2FinalScore());
-        tv_player3FinalScore.setText(item.getPlayer3FinalScore());
-        tv_player4FinalScore.setText(item.getPlayer4FinalScore());
+        tv_player1FinalScore.setText(mGameListItem.getPlayer1FinalScore());
+        tv_player2FinalScore.setText(mGameListItem.getPlayer2FinalScore());
+        tv_player3FinalScore.setText(mGameListItem.getPlayer3FinalScore());
+        tv_player4FinalScore.setText(mGameListItem.getPlayer4FinalScore());
 
         */
 
@@ -107,7 +105,7 @@ public class TabAFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            //mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -141,6 +139,6 @@ public class TabAFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
     }
 }

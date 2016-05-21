@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.greativy.leo14.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
 /**
@@ -24,11 +22,14 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
         this.mListener = mItemClickListener;
     }
     private List<SingleGameItem> sGameItems;
+    private GameListItem mGameListItem;
     //private final List<DummyItem> mValues;
     public OnItemClickListener mListener;
 
-    public RoundListRecyclerViewAdapter(List<SingleGameItem> items, OnItemClickListener listener) {
+    public RoundListRecyclerViewAdapter(GameListItem item, List<SingleGameItem> items, OnItemClickListener listener) {
+
         sGameItems = items;
+        mGameListItem = item;
         mListener = listener;
     }
 
@@ -42,15 +43,19 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-        SingleGameItem item = sGameItems.get(position);
-
+        SingleGameItem singleGameItem = sGameItems.get(position);
         //viewHolder.mIdView.setText(mValues.get(position).id);
         //viewHolder.mContentView.setText(mValues.get(position).content);
-        viewHolder.mIdView.setText(item.getGameType());
-        viewHolder.p1rScore.setText(item.getPlayer1RoundScore().toString());
-        viewHolder.p2rScore.setText(item.getPlayer2RoundScore().toString());
-        viewHolder.p3rScore.setText(item.getPlayer3RoundScore().toString());
-        viewHolder.p4rScore.setText(item.getPlayer4RoundScore().toString());
+        viewHolder.mIdView.setText(singleGameItem.getGameType());
+        viewHolder.p1rScore.setText(singleGameItem.getPlayer1RoundScore().toString());
+        viewHolder.p2rScore.setText(singleGameItem.getPlayer2RoundScore().toString());
+        viewHolder.p3rScore.setText(singleGameItem.getPlayer3RoundScore().toString());
+        viewHolder.p4rScore.setText(singleGameItem.getPlayer4RoundScore().toString());
+        viewHolder.tv_player1.setText(mGameListItem.getPlayer1());
+        viewHolder.tv_player2.setText(mGameListItem.getPlayer2());
+        viewHolder.tv_player3.setText(mGameListItem.getPlayer3());
+        viewHolder.tv_player4.setText(mGameListItem.getPlayer4());
+
 
         //viewHolder.mContentView.setText(item.getPlayer1RoundScore());
         /**viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -75,28 +80,37 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
     public class ViewHolder extends RecyclerView.ViewHolder {
         //public final View mView;
         public TextView mIdView;
-        public TextView mContentView;
         public TextView p1rScore;
         public TextView p2rScore;
         public TextView p3rScore;
         public TextView p4rScore;
+        public TextView tv_player1;
+        public TextView tv_player2;
+        public TextView tv_player3;
+        public TextView tv_player4;
+
+
 
 
         public ViewHolder(View view) {
             super(view);
             //mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.roundScoreType);
             p1rScore = (TextView) view.findViewById(R.id.p1rScore);
             p2rScore = (TextView) view.findViewById(R.id.p2rScore);
             p3rScore = (TextView) view.findViewById(R.id.p3rScore);
             p4rScore = (TextView) view.findViewById(R.id.p4rScore);
+            tv_player1 = (TextView) view.findViewById(R.id.tv_DBplayer1);
+            tv_player2 = (TextView) view.findViewById(R.id.tv_DBplayer2);
+            tv_player3 = (TextView) view.findViewById(R.id.tv_DBplayer3);
+            tv_player4 = (TextView) view.findViewById(R.id.tv_DBplayer4);
+
 
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mIdView.getText() + "'";
         }
 
     }

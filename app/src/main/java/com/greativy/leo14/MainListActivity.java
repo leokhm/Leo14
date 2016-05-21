@@ -70,8 +70,10 @@ public class MainListActivity extends AppCompatActivity {
                 //Snackbar.make(v, "test", Snackbar.LENGTH_LONG).show();
 
                 Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("GameListItem",item);
+                intent.putExtras(bundle);
                 intent.putExtra("position",position);
-                intent.putExtra("com.greativy.leo14.GamelistItem", item);
                 intent.setClass(MainListActivity.this, SingleGameActivity.class);
                 startActivity(intent);
 

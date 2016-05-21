@@ -158,18 +158,18 @@ public class GameListDAO {
 
     public void sample() {
 
-        GameListItem item1 = new GameListItem(0, "Game Title 1", new Date().getTime(), new Date().getTime(), "G1Player1ddddddddddd", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item2 = new GameListItem(0, "Game Title 2", new Date().getTime(), new Date().getTime(), "G2Player1", "Player2ddddddddddddd", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item3 = new GameListItem(0, "Game Title 3", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item4 = new GameListItem(0, "Game Title 4", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item5 = new GameListItem(0, "Game Title 5", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item6 = new GameListItem(0, "Game Title 6", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item7 = new GameListItem(0, "Game Title 7", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item8 = new GameListItem(0, "Game Title 8", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item9 = new GameListItem(0, "Game Title 9", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item10 = new GameListItem(0, "Game Title 10", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item11 = new GameListItem(0, "Game Title 11", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item12 = new GameListItem(0, "Game Title 12", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item1 = new GameListItem(0, "Game 1", new Date().getTime(), new Date().getTime(), "G1Player1ddddddddddd", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item2 = new GameListItem(0, "Game 2", new Date().getTime(), new Date().getTime(), "G2Player1", "Player2ddddddddddddd", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item3 = new GameListItem(0, "Game 3", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item4 = new GameListItem(0, "Game 4", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item5 = new GameListItem(0, "Game 5", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item6 = new GameListItem(0, "Game 6", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item7 = new GameListItem(0, "Game 7", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item8 = new GameListItem(0, "Game 8", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item9 = new GameListItem(0, "Game 9", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item10 = new GameListItem(0, "Game 10", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item11 = new GameListItem(0, "Game 11", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item12 = new GameListItem(0, "Game 12", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
 
         insert(item1);
         insert(item2);

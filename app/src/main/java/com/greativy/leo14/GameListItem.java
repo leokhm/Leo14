@@ -1,9 +1,11 @@
 package com.greativy.leo14;
 
+import java.io.Serializable;
+
 /**
  * Created by leokh on 4/4/2016.
  */
-public class GameListItem implements java.io.Serializable {
+public class GameListItem implements Serializable {
 
     private long Id;
     private String gameTitle;

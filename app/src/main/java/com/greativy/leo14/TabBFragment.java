@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +25,19 @@ import java.util.List;
  */
 public class TabBFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+
     private OnItemClickListener mListener;
     private List<SingleGameItem> items;
     private SingleGameDAO singleGameDAO;
     private RoundListRecyclerViewAdapter roundListRecyclerViewAdapter;
-
-    private static final String ACTIVITY_TAG="LogDemo";
-
+    private GameListItem mGameListItem;
+    private String KEY_GAMELISTITEM = "GameListItem";
+    private Bundle bundle;
+    private String gameTitle;
+    private String player1;
+    private String player2;
+    private String player3;
+    private String player4;
 
 
     /**
@@ -42,24 +45,38 @@ public class TabBFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public TabBFragment() {
+
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static TabBFragment newInstance() {
-        TabBFragment fragment = new TabBFragment();
-        Bundle args = new Bundle();
-        //args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    /**
+     * // TODO: Customize parameter initialization
+     *
+     * @SuppressWarnings("unused") public static TabBFragment newInstance() {
+     * TabBFragment fragment = new TabBFragment();
+     * //Bundle args = new Bundle();
+     * //args.putInt(ARG_COLUMN_COUNT, columnCount);
+     * //fragment.setArguments(args);
+     * return fragment;
+     * }
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("onCreate", "logC");
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            Log.i("log", "logD");
+
+            bundle = getArguments();
+            mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
+            gameTitle = mGameListItem.getGameTitle();
+            player1 = mGameListItem.getPlayer1();
+            player2 = mGameListItem.getPlayer2();
+            player3 = mGameListItem.getPlayer3();
+            player4 = mGameListItem.getPlayer4();
+
+
         }
     }
 
@@ -67,28 +84,13 @@ public class TabBFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_b_list, container, false);
-        Intent intent = getActivity().getIntent();
-        GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView =(RecyclerView) view.findViewById(R.id.recyclerview_sgame);
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_sgame);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
-            //setText for 4 players names
-            TextView tv_Bplayer1 = (TextView) view.findViewById(R.id.tv_DBplayer1);
-            TextView tv_Bplayer2 = (TextView) view.findViewById(R.id.tv_DBplayer2);
-            TextView tv_Bplayer3 = (TextView) view.findViewById(R.id.tv_DBplayer3);
-            TextView tv_Bplayer4 = (TextView) view.findViewById(R.id.tv_DBplayer4);
-
-            //TODO fix NPE
-            //tv_Bplayer1.setText(item.getPlayer1());
-            //tv_Bplayer2.setText(item.getPlayer2());
-            //tv_Bplayer3.setText(item.getPlayer3());
-            //tv_Bplayer4.setText(item.getPlayer4());
-
 
 
             singleGameDAO = new SingleGameDAO(getActivity().getApplicationContext());
@@ -98,7 +100,7 @@ public class TabBFragment extends Fragment {
             items = singleGameDAO.getAllByGameId(1);
 
 
-            roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
+            roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void clickOnView(View v, int position) {
                     SingleGameItem item = items.get(position);
@@ -106,13 +108,8 @@ public class TabBFragment extends Fragment {
                     Snackbar.make(v, "test", Snackbar.LENGTH_LONG).show();
 
 
-
-
-
                 }
             });
-
-
 
 
             recyclerView.setAdapter(roundListRecyclerViewAdapter);

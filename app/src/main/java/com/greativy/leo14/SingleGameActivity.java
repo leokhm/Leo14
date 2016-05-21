@@ -1,7 +1,6 @@
 package com.greativy.leo14;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +28,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private mFragmentPagerAdapter mMFragmentPagerAdapter;
+    private mFragmentPagerAdapter mFragmentPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -42,7 +41,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
     public void onListFragmentInteraction(SingleGameItem item){
         //you can leave it empty
     }
-    public void onFragmentInteraction(Uri uri){
+    public void onFragmentInteraction(){
         //you can leave it empty
     }
     @Override
@@ -55,33 +54,19 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
 
         Intent intent = getIntent();
-        GameListItem item = (GameListItem) intent.getExtras().getSerializable("com.greativy.leo14.GamelistItem");
+        GameListItem item = (GameListItem) intent.getExtras().getSerializable("GameListItem");
         setTitle(item.getGameTitle());
 
-        fragmentManager = getSupportFragmentManager();//Get Fragment Manager
-        Bundle bundle = new Bundle();
-        bundle.putString("player1", item.getPlayer1());
-        bundle.putString("player2", item.getPlayer2());
-        bundle.putString("player3", item.getPlayer3());
-        bundle.putString("player4", item.getPlayer4());
-        bundle.putString("edittext", "from activity");
-        Fragment fragment = new Fragment();
-        fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.tabs, fragment).commit();//now replace the argument fragment
-
-
-
-
-
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTabs = (TabLayout) findViewById(R.id.tabs);
+        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(),item);
+        mViewPager.setAdapter(mFragmentPagerAdapter);
+        mTabs.setupWithViewPager(mViewPager);
 
     }
 
     private void viewPagerNtabs() {
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mTabs = (TabLayout) findViewById(R.id.tabs);
-        mMFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mMFragmentPagerAdapter);
-        mTabs.setupWithViewPager(mViewPager);
+
     }
 
 
@@ -154,7 +139,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_single_game, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tab_c, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
@@ -168,18 +153,33 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      * one of the sections/tabs/pages.
      */
     public class mFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        public mFragmentPagerAdapter(FragmentManager fm) {
+        public GameListItem item;
+        private String KEY_GAMELISTITEM = "GameListItem";
+        public mFragmentPagerAdapter(FragmentManager fm, GameListItem item) {
             super(fm);
+            this.item =item;
         }
 
         @Override
         public Fragment getItem(int position) {
+            Bundle arg = new Bundle();
+            Bundle arg2 = new Bundle();
+
+            arg.putSerializable(KEY_GAMELISTITEM,item);
+            arg2.putSerializable(KEY_GAMELISTITEM,item);
+
+
             switch (position) {
                 case 0:
-                    return TabAFragment.newInstance();
+
+                    TabAFragment tabAFragment = new TabAFragment();
+                    tabAFragment.setArguments(arg);
+                    return tabAFragment;
                 case 1:
-                    return TabBFragment.newInstance();
+
+                    TabBFragment tabBFragment = new TabBFragment();
+                    tabBFragment.setArguments(arg2);
+                    return tabBFragment;
                 case 2:
                     return PlaceholderFragment.newInstance(position + 1);
             }
