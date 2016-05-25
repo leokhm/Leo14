@@ -1,43 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="25dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraintLayout">
 
-    <TextView
-        android:id="@+id/id_label_your_name"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:gravity="center_vertical"
-        android:text="Your name:" />
 
-    <EditText
-        android:id="@+id/id_txt_your_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/id_label_your_name"
-        android:imeOptions="actionDone"
-        android:inputType="text" />
+    <NumberPicker
+        android:layout_width="63dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="69dp"
+        android:id="@+id/numberPicker_name"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintVertical_bias="0.110000014" />
+
+    <NumberPicker
+        android:layout_width="39dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="69dp"
+        android:id="@+id/numberPicker_roundType"
+        app:layout_constraintLeft_toRightOf="@+id/numberPicker_name"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintVertical_bias="0.11" />
+
+    <NumberPicker
+        android:layout_width="66dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="69dp"
+        android:id="@+id/numberPicker_score"
+        app:layout_constraintLeft_toRightOf="@+id/numberPicker_name2"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintVertical_bias="0.11" />
 
     <Button
-        android:id="@+id/id_sure_edit_name"
+        android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/id_txt_your_name"
-        android:text="ok" />
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="148dp"
+        android:id="@+id/button_RoundSubmit"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toBottomOf="@+id/numberPicker_name2"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintVertical_bias="0.06" />
+
+    <Button
+        android:text="Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="204dp"
+        android:id="@+id/button_RoundCancel"
+        app:layout_constraintTop_toBottomOf="@+id/button_RoundSubmit"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintRight_toRightOf="@+id/button_RoundSubmit"
+        tools:layout_constraintRight_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintVertical_bias="0.0" />
+
     <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/numberPicker_name"
-        android:layout_alignTop="@+id/numberPicker_score"
-        android:layout_toStartOf="@+id/numberPicker_score" />
-
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/numberPicker_score"
-        android:layout_below="@+id/id_sure_edit_name"
-        android:layout_centerHorizontal="true" />
-
-
-
-</RelativeLayout>
+        android:layout_width="62dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="69dp"
+        android:id="@+id/numberPicker_name2"
+        app:layout_constraintLeft_toRightOf="@+id/numberPicker_roundType"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"
+        app:layout_constraintVertical_bias="0.11" />
+</android.support.constraint.ConstraintLayout>

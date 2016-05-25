@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener,TabBFragment.OnItemClickListener {
+public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener, TabBFragment.OnItemClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,37 +36,51 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      */
     private ViewPager mViewPager;
     private android.support.design.widget.TabLayout mTabs;
-    private static FragmentManager fragmentManager;
+    private String KEY_GAMELISTITEM = "GameListItem";
+    private Bundle bundle;
 
-
-    public void onListFragmentInteraction(SingleGameItem item){
+    public void onListFragmentInteraction(SingleGameItem item) {
         //you can leave it empty
     }
-    public void onFragmentInteraction(){
+
+    public void onFragmentInteraction() {
         //you can leave it empty
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_game);
-        fab();
+
         toolbar();
-        viewPagerNtabs();
 
-
+        /** get the Intent and pass to Bundle*/
         Intent intent = getIntent();
         GameListItem item = (GameListItem) intent.getExtras().getSerializable("GameListItem");
+        bundle = new Bundle();
+        bundle.putSerializable(KEY_GAMELISTITEM, item);
+        /** setup toolbar title */
         setTitle(item.getGameTitle());
-        Toast.makeText(getApplicationContext(), String.valueOf(item.getId()),Toast.LENGTH_LONG).show();
+        /** test the correct GameListItem Id by toast*/
+        Toast.makeText(getApplicationContext(), String.valueOf(item.getId()), Toast.LENGTH_LONG).show();
+        /** setup viewpager and pass the FragmentPagerAdapter into it, and setup the tabs */
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
-        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(),item);
+        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(), item);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabs.setupWithViewPager(mViewPager);
+        /** setup floating actioni button with onClick method */
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    }
+                NewRoundDialogFragment editNameDialog = new NewRoundDialogFragment();
+                editNameDialog.setArguments(bundle);
+                editNameDialog.show(getSupportFragmentManager(), "EditNameDialog");
 
-    private void viewPagerNtabs() {
+            }
+        });
 
     }
 
@@ -75,20 +89,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-    public void fab() {
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                    NewRoundDialogFragment editNameDialog = new NewRoundDialogFragment();
-                    editNameDialog.show(getSupportFragmentManager(), "EditNameDialog");
-
-            }
-        });
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,10 +156,10 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
      */
     public class mFragmentPagerAdapter extends FragmentPagerAdapter {
         public GameListItem item;
-        private String KEY_GAMELISTITEM = "GameListItem";
+
         public mFragmentPagerAdapter(FragmentManager fm, GameListItem item) {
             super(fm);
-            this.item =item;
+            this.item = item;
         }
 
         @Override
@@ -166,9 +167,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
             Bundle arg = new Bundle();
             Bundle arg2 = new Bundle();
 
-            arg.putSerializable(KEY_GAMELISTITEM,item);
-            arg2.putSerializable(KEY_GAMELISTITEM,item);
-
+            arg.putSerializable(KEY_GAMELISTITEM, item);
 
             switch (position) {
                 case 0:
@@ -179,7 +178,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
                 case 1:
 
                     TabBFragment tabBFragment = new TabBFragment();
-                    tabBFragment.setArguments(arg2);
+                    tabBFragment.setArguments(arg);
                     return tabBFragment;
                 case 2:
                     return PlaceholderFragment.newInstance(position + 1);
