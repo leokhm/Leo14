@@ -6,27 +6,201 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class NewRoundDialogFragment extends DialogFragment {
     private NumberPicker numberPicker_score;
     private NumberPicker numberPicker_name;
     private NumberPicker numberPicker_name2;
-    private NumberPicker numberPicker_roundtype;
+    private NumberPicker numberPicker_scoreType;
+    private Button button_RoundSubmit;
     private String KEY_GAMELISTITEM = "GameListItem";
+    private List<SingleGameItem> mSingleGameItems;
     private GameListItem mGameListItem;
+    private SingleGameItem mSingleGameItem;
+    private SingleGameDAO mSingleGameDAO;
+    private Bundle bundle;
+    private RoundListRecyclerViewAdapter mRoundListRecyclerViewAdapter;
     private String player1;
     private String player2;
     private String player3;
     private String player4;
     private String[] players;
+    private int NameValue;
+    private int Name2Value;
+    private int ScoreTypeValue;
+    private int ScoreValue;
+    private long gameId;
+    private Boolean CreateNewRound;
+    private OnItemSubmitListener mListener;
+    final String[] scoreType = new String[]{"食", "自摸", "出", "包"};
+    String[] scoreLevel = new String[]{"3", "4", "5", "6", "7", "8", "9", "10"};
+    int[][] scoreLevel2 = new int[][]{{3, 4, 5, 6, 7, 8, 9, 10},
+            {8, 16, 24, 36, 48, 64, 80, 128}, {4, 8, 12, 16, 24, 32, 48, 64}};
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("onCreate", "logC");
+
+        if (getArguments() != null) {
+            Log.i("log", "logD");
+
+            bundle = getArguments();
+            mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
+            gameId = mGameListItem.getId();
+            Log.i("gameId", "game Id is "+String.valueOf(gameId));
+
+
+        }
+    }
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_round, container);
+        button_RoundSubmit = (Button) view.findViewById(R.id.button_RoundSubmit);
+        button_RoundSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSingleGameItem = new SingleGameItem();
+                mSingleGameDAO = new SingleGameDAO(getContext());
+                mSingleGameItems = mSingleGameDAO.getAll();
+                mSingleGameItem.setId(mSingleGameItems.size());
+                mSingleGameItem.setGameType(0);
+                mSingleGameItem.setGameId(gameId);
+
+                NameValue = numberPicker_name.getValue();
+                Name2Value = numberPicker_name2.getValue();
+                ScoreTypeValue = numberPicker_scoreType.getValue();
+                ScoreValue = numberPicker_score.getValue();
+                Toast.makeText(getContext(), NameValue + " " + ScoreValue + ScoreTypeValue + Name2Value, Toast.LENGTH_LONG).show();
+
+                switch (ScoreTypeValue) {
+                    default:
+                        break;
+                    case 0:
+                        mSingleGameItem.setScoreType(ScoreTypeValue);
+                        if (NameValue == 0 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 0 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 0 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[1][ScoreValue]);
+                        } else
+                        if (NameValue == 1 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 1 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 1 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[1][ScoreValue]);
+                        } else
+                        if (NameValue == 2 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 2 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 2 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[1][ScoreValue]);
+                        } else
+                        if (NameValue == 3 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[1][ScoreValue]);
+                        } else if (NameValue == 3 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[1][ScoreValue]);
+                        } else if (NameValue == 3 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[1][ScoreValue]);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[1][ScoreValue]);
+                        }
+                        mSingleGameDAO.insert(mSingleGameItem);
+                        CreateNewRound= true;
+                        /**TODO fix NPE */
+                        mListener.onDialogFragmentInteraction(CreateNewRound);
+                        //mRoundListRecyclerViewAdapter.notifyItemInserted(mSingleGameDAO.getAll().size()+1);
+                        break;
+
+                    case 1:
+                        Log.i("Case 1 Happen","Case 1 Happen, scoreType is "+ScoreTypeValue);
+                        mSingleGameItem.setScoreType(ScoreTypeValue);
+                        switch (NameValue) {
+                            default:
+                                Log.i("NameValue Exception","default throwout");
+                                break;
+                            case 0:
+                                mSingleGameItem.setPlayer1RoundScore(scoreLevel2[2][ScoreValue]*3);
+                                mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                break;
+                            case 1:
+                                mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer2RoundScore(scoreLevel2[2][ScoreValue]*3);
+                                mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                break;
+                            case 2:
+                                mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer3RoundScore(scoreLevel2[2][ScoreValue]*3);
+                                mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                break;
+                            case 3:
+                                mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameItem.setPlayer4RoundScore(scoreLevel2[2][ScoreValue]*3);
+                                break;
+
+
+                        }
+                        mSingleGameDAO.insert(mSingleGameItem);
+                        break;
+                }
+
+
+            }
+        });
+
+
         /**get GameListItem from argument & assign to variables */
         mGameListItem = (GameListItem) getArguments().getSerializable(KEY_GAMELISTITEM);
         player1 = mGameListItem.getPlayer1();
@@ -39,7 +213,30 @@ public class NewRoundDialogFragment extends DialogFragment {
         numberPicker_name.setMinValue(0);
         numberPicker_name.setMaxValue(players.length - 1);
         numberPicker_name.setDisplayedValues(players);
-        numberPicker_name.setWrapSelectorWheel(true);
+        numberPicker_name.setWrapSelectorWheel(false);
+
+        numberPicker_name.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                /* error occur with this code
+                List<String> Lplayers2 = new ArrayList<String>();
+
+                String[] Aplayers2 = new String[4];
+                Lplayers2.clear();
+                    for (int i=0; i < 4; i++) {
+                        if (!players[i].equals(players[newVal])) {
+                            Lplayers2.add(players[i]);
+                        } else {};
+                }
+                Lplayers2.add(" ");
+                Log.i("show", Aplayers2[0]+ Aplayers2[1]+ Aplayers2[2]+Aplayers2[3]);
+                Lplayers2.toArray(Aplayers2);
+                numberPicker_name2.setDisplayedValues(Aplayers2);
+                */
+
+
+            }
+        });
 
         /** findView for numberPicker 2nd name and setup */
 
@@ -47,65 +244,48 @@ public class NewRoundDialogFragment extends DialogFragment {
         numberPicker_name2.setMinValue(0);
         numberPicker_name2.setMaxValue(players.length - 1);
         numberPicker_name2.setDisplayedValues(players);
+        numberPicker_name2.setWrapSelectorWheel(false);
+
 
         /** findView for numberPicker Round Type and setup */
-        final String[] scoretype = new String[]{"自摸", "食", "出", "包"};
-        numberPicker_roundtype = (NumberPicker) view.findViewById(R.id.numberPicker_roundType);
-        numberPicker_roundtype.setMinValue(0);
-        numberPicker_roundtype.setMaxValue(3); /**自膜，食糊 */
-        numberPicker_roundtype.setDisplayedValues(scoretype);
-        numberPicker_roundtype.setWrapSelectorWheel(true);
-        numberPicker_roundtype.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        numberPicker_scoreType = (NumberPicker) view.findViewById(R.id.numberPicker_roundType);
+        numberPicker_scoreType.setMinValue(0);
+        numberPicker_scoreType.setMaxValue(3); /**自膜，食糊 */
+        numberPicker_scoreType.setDisplayedValues(scoreType);
+        numberPicker_scoreType.setWrapSelectorWheel(false);
+        numberPicker_scoreType.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Toast.makeText(getContext(), "from " + String.valueOf(oldVal) + " to " + String.valueOf(newVal), Toast.LENGTH_SHORT).show();
-                if (numberPicker_name2.getValue() == 0) {
+                //Toast.makeText(getContext(), "from " + String.valueOf(oldVal) + " to " + String.valueOf(newVal), Toast.LENGTH_SHORT).show();
+                if (newVal == 1) {
+                    numberPicker_name2.setVisibility(View.INVISIBLE);
+                    /*Depreciate to use hide view instead
                     String[] NA = {" ", "", "", ""};
-                    numberPicker_name2.setMinValue(0);
-                    numberPicker_name2.setMaxValue(NA.length - 1);
                     numberPicker_name2.setDisplayedValues(NA);
-                    numberPicker_name2.setWrapSelectorWheel(true);
+                    */
 
-                }
-                if (numberPicker_name2.getValue() != 0) {
+
+                } else {
+                    numberPicker_name2.setVisibility(View.VISIBLE);
+                    /*Depreciate to use hide view instead
                     players = new String[]{player1, player2, player3, player4};
-
-                    numberPicker_name2.setMinValue(0);
-                    numberPicker_name2.setMaxValue(players.length - 1);
                     numberPicker_name2.setDisplayedValues(players);
+                    */
                 }
-                /*if (newVal == 0) {
-                    String [] NA = {" "};
-                    numberPicker_name2.setMinValue(0);
-                    numberPicker_name2.setMaxValue(players.length-1);
-                    numberPicker_name2.setDisplayedValues(NA);
-
-                }
-                if (newVal != 0){
-                    //String[] players2 = new String[]{player1, player2, player3, player4};
-
-                    int log = players.length -1;
-                    Log.i("players2 length", String.valueOf(log));
-
-                    numberPicker_name2.setDisplayedValues(players);
-
-
-
-                } */
             }
         });
 
 
         /** findView for numberPicker Fan and setup */
-        String[] scoreLevel = new String[]{"3", "4", "5", "6", "7", "8", "9", "10"};
         numberPicker_score = (NumberPicker) view.findViewById(R.id.numberPicker_score);
         numberPicker_score.setMaxValue(scoreLevel.length - 1);
         numberPicker_score.setMinValue(0);
         numberPicker_score.setDisplayedValues(scoreLevel);
-        numberPicker_score.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        numberPicker_score.setWrapSelectorWheel(false);
 
-                                                     {
+        numberPicker_score.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                                                          @Override
+
                                                          public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                                                          }
 
@@ -115,6 +295,11 @@ public class NewRoundDialogFragment extends DialogFragment {
         return view;
 
 
+    }
+
+    public interface OnItemSubmitListener {
+        // TODO: Update argument type and name
+        void onDialogFragmentInteraction(Boolean CreateNewRound);
     }
 
 }

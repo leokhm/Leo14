@@ -70,6 +70,7 @@ public class TabBFragment extends Fragment {
 
             bundle = getArguments();
             mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
+
             gameTitle = mGameListItem.getGameTitle();
             player1 = mGameListItem.getPlayer1();
             player2 = mGameListItem.getPlayer2();
@@ -98,7 +99,8 @@ public class TabBFragment extends Fragment {
                 singleGameDAO.sample();
             }
             items = singleGameDAO.getAllByGameId(mGameListItem.getId());
-
+            Log.i("Tab B Fragment"," in Game "+ mGameListItem.getId());
+            Log.i("Tab B Fragment"," has items "+items.size());
 
             roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
                 @Override
@@ -114,6 +116,14 @@ public class TabBFragment extends Fragment {
 
             recyclerView.setAdapter(roundListRecyclerViewAdapter);
         }
+
+        Boolean CreateNewRound = bundle.getBoolean("CreateNewRound");
+        if(CreateNewRound == true) {
+            roundListRecyclerViewAdapter.notifyItemInserted(singleGameDAO.getAll().size()+1);
+
+        }
+
+
         return view;
     }
 

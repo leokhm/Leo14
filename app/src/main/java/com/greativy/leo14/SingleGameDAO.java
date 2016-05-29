@@ -25,11 +25,11 @@ public class SingleGameDAO {
     public static final String PLAYER4ROUNDSCORE = "p4rscore";
 
     public static final String CREATE_TABLE2 =
-            "CREATE TABLE "+ TABLE_SGAME +" ("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    GAME_ID +" INTEGER NOT NULL, "+GAMETYPE+" INTEGER NOT NULL, " +
-                    ROUNDSCORETYPE+" INTEGER NOT NULL, "+PLAYER1ROUNDSCORE+" INTEGER NOT NULL, " +
-                    PLAYER2ROUNDSCORE+" INTEGER NOT NULL, "+PLAYER3ROUNDSCORE+" INTEGER,"+
-                    PLAYER4ROUNDSCORE+ " INTEGER)";
+            "CREATE TABLE " + TABLE_SGAME + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    GAME_ID + " INTEGER NOT NULL, " + GAMETYPE + " INTEGER NOT NULL, " +
+                    ROUNDSCORETYPE + " INTEGER NOT NULL, " + PLAYER1ROUNDSCORE + " INTEGER NOT NULL, " +
+                    PLAYER2ROUNDSCORE + " INTEGER NOT NULL, " + PLAYER3ROUNDSCORE + " INTEGER," +
+                    PLAYER4ROUNDSCORE + " INTEGER)";
 
     private SQLiteDatabase db;
 
@@ -45,7 +45,7 @@ public class SingleGameDAO {
         ContentValues cv = new ContentValues();
         cv.put(GAME_ID, item.getGameId());
         cv.put(GAMETYPE, item.getGameType());
-        cv.put(ROUNDSCORETYPE, item.getRoundScoreType());
+        cv.put(ROUNDSCORETYPE, item.getScoreType());
         cv.put(PLAYER1ROUNDSCORE, item.getPlayer1RoundScore());
         cv.put(PLAYER2ROUNDSCORE, item.getPlayer2RoundScore());
         cv.put(PLAYER3ROUNDSCORE, item.getPlayer3RoundScore());
@@ -61,7 +61,7 @@ public class SingleGameDAO {
         ContentValues cv = new ContentValues();
         cv.put(GAME_ID, item.getGameId());
         cv.put(GAMETYPE, item.getGameType());
-        cv.put(ROUNDSCORETYPE, item.getRoundScoreType());
+        cv.put(ROUNDSCORETYPE, item.getScoreType());
         cv.put(PLAYER1ROUNDSCORE, item.getPlayer1RoundScore());
         cv.put(PLAYER2ROUNDSCORE, item.getPlayer2RoundScore());
         cv.put(PLAYER3ROUNDSCORE, item.getPlayer3RoundScore());
@@ -81,8 +81,8 @@ public class SingleGameDAO {
         SingleGameItem result = new SingleGameItem();
         result.setId(cursor.getLong(0));
         result.setGameId(cursor.getLong(1));
-        result.setGameType(cursor.getString(2));
-        result.setRoundScoreType(cursor.getInt(3));
+        result.setGameType(cursor.getInt(2));
+        result.setScoreType(cursor.getInt(3));
         result.setPlayer1RoundScore(cursor.getInt(4));
         result.setPlayer2RoundScore(cursor.getInt(5));
         result.setPlayer3RoundScore(cursor.getInt(6));
@@ -96,6 +96,7 @@ public class SingleGameDAO {
     public List<SingleGameItem> getAll() {
         List<SingleGameItem> result = new ArrayList<>();
         Cursor cursor = db.query(TABLE_SGAME, null, null, null, null, null, null, null);
+        cursor.moveToFirst();
         while (cursor.moveToNext()) {
             result.add(getRecord(cursor));
         }
@@ -108,8 +109,9 @@ public class SingleGameDAO {
 
     public List<SingleGameItem> getAllByGameId(long gameId) {
         List<SingleGameItem> result = new ArrayList<SingleGameItem>();
-        String selectQuery = "SELECT * FROM " + TABLE_SGAME + " ts WHERE ts." +GAME_ID + " = "+ gameId;
+        String selectQuery = "SELECT * FROM " + TABLE_SGAME + " ts WHERE ts." + GAME_ID + " = " + gameId;
         Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
         while (cursor.moveToNext()) {
             result.add(getRecord(cursor));
         }
@@ -141,26 +143,25 @@ public class SingleGameDAO {
 
     public void sample() {
         /**result.setId(cursor.getLong(0));
-        result.setGameId(cursor.getLong(1));
-        result.setGameType(cursor.getString(2));
-        result.setRoundScoreType(cursor.getInt(3));
-        result.setPlayer1RoundScore(cursor.getInt(4));
-        result.setPlayer2RoundScore(cursor.getInt(5));
-        result.setPlayer3RoundScore(cursor.getInt(6));
-        result.setPlayer4RoundScore(cursor.getInt(7));*/
-        //    public SingleGameItem(long id, long gameId, String gameType, Integer roundScoreType, Integer player1RoundScore, Integer player2RoundScore, Integer player3RoundScore, Integer player4RoundScore) {
+         result.setGameId(cursor.getLong(1));
+         result.setGameType(cursor.getString(2));
+         result.setScoreType(cursor.getInt(3));
+         result.setPlayer1RoundScore(cursor.getInt(4));
+         result.setPlayer2RoundScore(cursor.getInt(5));
+         result.setPlayer3RoundScore(cursor.getInt(6));
+         result.setPlayer4RoundScore(cursor.getInt(7));*/
+        //    public SingleGameItem(long id, long gameId, integer gameType, Integer roundScoreType, Integer player1RoundScore, Integer player2RoundScore, Integer player3RoundScore, Integer player4RoundScore) {
 
-        SingleGameItem item1 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
-
-        SingleGameItem item2 = new SingleGameItem(1, 2, "gdmj2", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item3 = new SingleGameItem(2, 3, "gdmj3", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item4 = new SingleGameItem(3, 4, "gdmj4", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item5 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item6 = new SingleGameItem(0, 1, "gdmj1", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item7 = new SingleGameItem(3, 5, "gdmj4", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item8 = new SingleGameItem(3, 6, "gdmj4", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item9 = new SingleGameItem(3, 7, "gdmj4", 0 , 24, 0 , 0 , -24 );
-        SingleGameItem item10 = new SingleGameItem(3, 8, "gdmj4", 0 , 24, 0 , 0 , -24 );
+        SingleGameItem item1 = new SingleGameItem(0, 1, 0, 0, 8, 0, 0, -8);
+        SingleGameItem item2 = new SingleGameItem(1, 2, 0, 0, 16, 0, 0, -16);
+        SingleGameItem item3 = new SingleGameItem(2, 3, 0, 0, 24, 0, 0, -24);
+        SingleGameItem item4 = new SingleGameItem(3, 4, 0, 0, 36, 0, 0, -36);
+        SingleGameItem item5 = new SingleGameItem(4, 1, 0, 0, 40, 0, 0, -40);
+        SingleGameItem item6 = new SingleGameItem(5, 1, 0, 0, 48, 0, 0, -48);
+        SingleGameItem item7 = new SingleGameItem(6, 5, 0, 0, 60, 0, 0, -60);
+        SingleGameItem item8 = new SingleGameItem(7, 6, 0, 0, 64, 0, 0, -64);
+        SingleGameItem item9 = new SingleGameItem(8, 7, 0, 0, 96, 0, 0, -72);
+        SingleGameItem item10 = new SingleGameItem(9, 8, 0, 0, 96, 0, 0, -96);
 
 
         insert(item1);
@@ -174,10 +175,6 @@ public class SingleGameDAO {
         insert(item9);
 
         insert(item10);
-
-
-
-
 
 
     }

@@ -44,9 +44,9 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         SingleGameItem singleGameItem = sGameItems.get(position);
-        //viewHolder.mIdView.setText(mValues.get(position).id);
+        //viewHolder.ScoreType.setText(mValues.get(position).id);
         //viewHolder.mContentView.setText(mValues.get(position).content);
-        viewHolder.mIdView.setText(singleGameItem.getGameType());
+        viewHolder.ScoreType.setText(singleGameItem.getScoreType().toString());
         viewHolder.p1rScore.setText(singleGameItem.getPlayer1RoundScore().toString());
         viewHolder.p2rScore.setText(singleGameItem.getPlayer2RoundScore().toString());
         viewHolder.p3rScore.setText(singleGameItem.getPlayer3RoundScore().toString());
@@ -77,7 +77,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         //public final View mView;
-        public TextView mIdView;
+        public TextView ScoreType;
         public TextView p1rScore;
         public TextView p2rScore;
         public TextView p3rScore;
@@ -93,7 +93,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
         public ViewHolder(View view) {
             super(view);
             //mView = view;
-            mIdView = (TextView) view.findViewById(R.id.roundScoreType);
+            ScoreType = (TextView) view.findViewById(R.id.scoreType);
             p1rScore = (TextView) view.findViewById(R.id.p1rScore);
             p2rScore = (TextView) view.findViewById(R.id.p2rScore);
             p3rScore = (TextView) view.findViewById(R.id.p3rScore);
@@ -108,7 +108,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mIdView.getText() + "'";
+            return super.toString() + " '" + ScoreType.getText() + "'";
         }
 
     }

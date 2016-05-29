@@ -1,8 +1,11 @@
 package com.greativy.leo14;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -19,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener, TabBFragment.OnItemClickListener {
+public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener, TabBFragment.OnItemClickListener,NewRoundDialogFragment.OnItemSubmitListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,7 +42,20 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
     private String KEY_GAMELISTITEM = "GameListItem";
     private Bundle bundle;
 
+
+
+
     public void onListFragmentInteraction(SingleGameItem item) {
+        //you can leave it empty
+    }
+
+    public void onDialogFragmentInteraction(Boolean CreateNewRound) {
+        if (CreateNewRound == true) {
+            TabBFragment tabBFragment = new TabBFragment();
+            bundle.putBoolean("CreateNewRound",CreateNewRound);
+            tabBFragment.setArguments(bundle);
+
+        }
         //you can leave it empty
     }
 
@@ -51,7 +67,6 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_game);
-
         toolbar();
 
         /** get the Intent and pass to Bundle*/
@@ -89,7 +104,6 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

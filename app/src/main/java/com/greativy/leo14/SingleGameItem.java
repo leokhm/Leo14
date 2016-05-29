@@ -7,10 +7,8 @@ public class SingleGameItem implements java.io.Serializable {
 
     private long Id;
     private long gameId;
-
-
-    private String gameType;
-    private Integer roundScoreType;
+    private Integer gameType;
+    private Integer ScoreType;
     private Integer player1RoundScore;
     private Integer player2RoundScore;
     private Integer player3RoundScore;
@@ -20,11 +18,11 @@ public class SingleGameItem implements java.io.Serializable {
     public SingleGameItem() {
     }
 
-    public SingleGameItem(long id, long gameId, String gameType, Integer roundScoreType, Integer player1RoundScore, Integer player2RoundScore, Integer player3RoundScore, Integer player4RoundScore) {
+    public SingleGameItem(long id, long gameId, Integer gameType, Integer ScoreType, Integer player1RoundScore, Integer player2RoundScore, Integer player3RoundScore, Integer player4RoundScore) {
         Id = id;
         this.gameId = gameId;
         this.gameType = gameType;
-        this.roundScoreType = roundScoreType;
+        this.ScoreType = ScoreType;
         this.player1RoundScore = player1RoundScore;
         this.player2RoundScore = player2RoundScore;
         this.player3RoundScore = player3RoundScore;
@@ -47,20 +45,20 @@ public class SingleGameItem implements java.io.Serializable {
         Id = id;
     }
 
-    public String getGameType() {
+    public Integer getGameType() {
         return gameType;
     }
 
-    public void setGameType(String gameType) {
+    public void setGameType(int gameType) {
         this.gameType = gameType;
     }
 
-    public Integer getRoundScoreType() {
-        return roundScoreType;
+    public Integer getScoreType() {
+        return ScoreType;
     }
 
-    public void setRoundScoreType(Integer roundScoreType) {
-        this.roundScoreType = roundScoreType;
+    public void setScoreType(Integer scoreType) {
+        this.ScoreType = scoreType;
     }
 
     public Integer getPlayer1RoundScore() {
