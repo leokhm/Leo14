@@ -26,12 +26,14 @@ import java.util.List;
 public class TabBFragment extends Fragment {
 
 
-    private OnItemClickListener mListener;
+    OnItemClickListener mListener;
     private List<SingleGameItem> items;
     private SingleGameDAO singleGameDAO;
     private RoundListRecyclerViewAdapter roundListRecyclerViewAdapter;
     private GameListItem mGameListItem;
     private String KEY_GAMELISTITEM = "GameListItem";
+    private String KEY_newRoundBoolean = "NewRoundBoolean";
+    private Boolean CreateNewRound = false;
     private Bundle bundle;
     private String gameTitle;
     private String player1;
@@ -117,14 +119,14 @@ public class TabBFragment extends Fragment {
             recyclerView.setAdapter(roundListRecyclerViewAdapter);
         }
 
-        Boolean CreateNewRound = bundle.getBoolean("CreateNewRound");
-        if(CreateNewRound == true) {
-            roundListRecyclerViewAdapter.notifyItemInserted(singleGameDAO.getAll().size()+1);
-
-        }
 
 
         return view;
+    }
+
+    public void newRoundUpdate() {
+        roundListRecyclerViewAdapter.notifyItemInserted(singleGameDAO.getAll().size()+1);
+
     }
 
 

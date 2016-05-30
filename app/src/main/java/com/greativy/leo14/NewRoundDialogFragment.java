@@ -1,7 +1,9 @@
 package com.greativy.leo14;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class NewRoundDialogFragment extends DialogFragment {
+    OnItemSubmitListener mListener =null;
     private NumberPicker numberPicker_score;
     private NumberPicker numberPicker_name;
     private NumberPicker numberPicker_name2;
@@ -36,7 +39,7 @@ public class NewRoundDialogFragment extends DialogFragment {
     private int ScoreValue;
     private long gameId;
     private Boolean CreateNewRound;
-    private OnItemSubmitListener mListener;
+
     final String[] scoreType = new String[]{"食", "自摸", "出", "包"};
     String[] scoreLevel = new String[]{"3", "4", "5", "6", "7", "8", "9", "10"};
     int[][] scoreLevel2 = new int[][]{{3, 4, 5, 6, 7, 8, 9, 10},
@@ -154,7 +157,8 @@ public class NewRoundDialogFragment extends DialogFragment {
                         mSingleGameDAO.insert(mSingleGameItem);
                         CreateNewRound= true;
                         /**TODO fix NPE */
-                        mListener.onDialogFragmentInteraction(CreateNewRound);
+
+                        mListener.onDialogFragmentInteraction(mSingleGameItem);
                         //mRoundListRecyclerViewAdapter.notifyItemInserted(mSingleGameDAO.getAll().size()+1);
                         break;
 
@@ -193,6 +197,10 @@ public class NewRoundDialogFragment extends DialogFragment {
 
                         }
                         mSingleGameDAO.insert(mSingleGameItem);
+                        CreateNewRound= true;
+
+                        mListener.onDialogFragmentInteraction(mSingleGameItem);
+
                         break;
                 }
 
@@ -299,7 +307,13 @@ public class NewRoundDialogFragment extends DialogFragment {
 
     public interface OnItemSubmitListener {
         // TODO: Update argument type and name
-        void onDialogFragmentInteraction(Boolean CreateNewRound);
+        void onDialogFragmentInteraction(SingleGameItem item);
+    }
+
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        /** important to add to avoid interface listener's NPE */
+        mListener = (OnItemSubmitListener) context;
     }
 
 }

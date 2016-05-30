@@ -41,23 +41,30 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
     private android.support.design.widget.TabLayout mTabs;
     private String KEY_GAMELISTITEM = "GameListItem";
     private Bundle bundle;
+    Bundle arg = new Bundle();
+
 
 
 
 
     public void onListFragmentInteraction(SingleGameItem item) {
+
         //you can leave it empty
     }
 
-    public void onDialogFragmentInteraction(Boolean CreateNewRound) {
-        if (CreateNewRound == true) {
-            TabBFragment tabBFragment = new TabBFragment();
-            bundle.putBoolean("CreateNewRound",CreateNewRound);
-            tabBFragment.setArguments(bundle);
+    public void onDialogFragmentInteraction(SingleGameItem mSingleGameItem) {
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment tabBFragment = new TabBFragment();
+        tabBFragment.setArguments(arg);
+        fragmentManager.beginTransaction()
+                    .replace(R.id.recyclerview_sgame, tabBFragment, "tabBFragment")
+                    .commit();
+                    */
 
-        }
-        //you can leave it empty
+
     }
+        //you can leave it empty
+
 
     public void onFragmentInteraction() {
         //you can leave it empty
@@ -84,7 +91,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(), item);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabs.setupWithViewPager(mViewPager);
-        /** setup floating actioni button with onClick method */
+        /** setup floating action button with onClick method */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,9 +185,6 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
         @Override
         public Fragment getItem(int position) {
-            Bundle arg = new Bundle();
-            Bundle arg2 = new Bundle();
-
             arg.putSerializable(KEY_GAMELISTITEM, item);
 
             switch (position) {
@@ -219,4 +223,5 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
             return null;
         }
     }
+
 }
