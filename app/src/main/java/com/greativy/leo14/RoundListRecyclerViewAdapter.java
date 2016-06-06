@@ -37,7 +37,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.fragment_tab_b, parent, false);
+                .inflate(R.layout.fragment_tab_b_score, parent, false);
         return new ViewHolder(view);
     }
 

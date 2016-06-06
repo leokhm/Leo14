@@ -114,17 +114,20 @@ public class SingleGameDAO {
         String selectQuery = "SELECT * FROM " + TABLE_SGAME + " WHERE " + GAME_ID + " = '" + gameId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null && cursor.moveToFirst()) {
-            cursor.moveToFirst();
+            cursor.moveToLast();
 
             //SingleGameItem mSingleGameItem = new SingleGameItem();
             do {
                 result.add(getRecord(cursor));
-            } while (cursor.moveToNext());
+            } while (cursor.moveToPrevious());
             cursor.close();
         }
         return result;
     }
 
+    /**
+     * TODO get all column score sum by player
+     */
     public Integer getAllColumnScoreSum(String selectedColumn) {
         String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -140,13 +143,16 @@ public class SingleGameDAO {
     public Integer getColScoreSumByGameId(String selectedColumn, long gameId) {
         String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        Integer total;
+        if (cursor != null && cursor.moveToFirst()) {
+
+            total = cursor.getInt(cursor.getColumnIndex("myTotal"));
+            Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
             cursor.moveToFirst();
+            cursor.close();
+        } else {
+            total = 0;
         }
-        Integer total = cursor.getInt(cursor.getColumnIndex("myTotal"));
-        Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
-        cursor.moveToFirst();
-        cursor.close();
         return total;
     }
 
