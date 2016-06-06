@@ -32,14 +32,14 @@ public class TabBFragment extends Fragment {
     private RoundListRecyclerViewAdapter roundListRecyclerViewAdapter;
     private GameListItem mGameListItem;
     private String KEY_GAMELISTITEM = "GameListItem";
-    private String KEY_newRoundBoolean = "NewRoundBoolean";
-    private Boolean CreateNewRound = false;
+    private String KEY_SINGLEGAMEITEM = "SingleGameItem";
     private Bundle bundle;
     private String gameTitle;
     private String player1;
     private String player2;
     private String player3;
     private String player4;
+    private RecyclerView recyclerView;
 
 
     /**
@@ -91,7 +91,7 @@ public class TabBFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_sgame);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_sgame);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -100,9 +100,13 @@ public class TabBFragment extends Fragment {
             if (singleGameDAO.getCount() == 0) {
                 singleGameDAO.sample();
             }
+            /** TODO:can't getAll by gameId
+             */
+            Log.i("TabBFragment", "total game is " + String.valueOf(singleGameDAO.getCount()));
             items = singleGameDAO.getAllByGameId(mGameListItem.getId());
-            Log.i("Tab B Fragment"," in Game "+ mGameListItem.getId());
-            Log.i("Tab B Fragment"," has items "+items.size());
+            Log.i("TabBFragment", " in Game " + mGameListItem.getId());
+            Log.i("TabBFragment", " Game " + mGameListItem.getId() + " has items " + items.size());
+
 
             roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
                 @Override
@@ -114,19 +118,14 @@ public class TabBFragment extends Fragment {
 
                 }
             });
+            mListener.onListFragmentInteraction(items);
 
 
             recyclerView.setAdapter(roundListRecyclerViewAdapter);
         }
 
 
-
         return view;
-    }
-
-    public void newRoundUpdate() {
-        roundListRecyclerViewAdapter.notifyItemInserted(singleGameDAO.getAll().size()+1);
-
     }
 
 
@@ -159,6 +158,41 @@ public class TabBFragment extends Fragment {
      */
     public interface OnItemClickListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(SingleGameItem item);
+        void onListFragmentInteraction(List<SingleGameItem> items);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("tabBFragment", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("tabBFragment", "onPause");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            /**bundle = getArguments();
+             SingleGameItem singleGameItem = (SingleGameItem) bundle.getSerializable(KEY_SINGLEGAMEITEM);
+
+             if (singleGameItem != null) {
+             //items.add(items.size()+1,singleGameItem);
+             roundListRecyclerViewAdapter.notifyItemInserted(items.size()+1);
+             recyclerView.scrollToPosition(items.size()+1);
+             Log.i("SGitem Condition pass", "pass");
+
+             } else {
+
+             Log.i("SGitem Condition fail", "fail");
+             } */
+            Log.i("tabBFragment", "setUserVisibleHint Trigger");
+
+
+        }
     }
 }

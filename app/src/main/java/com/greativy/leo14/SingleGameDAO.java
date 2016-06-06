@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,7 @@ public class SingleGameDAO {
         List<SingleGameItem> result = new ArrayList<>();
         Cursor cursor = db.query(TABLE_SGAME, null, null, null, null, null, null, null);
         cursor.moveToFirst();
+
         while (cursor.moveToNext()) {
             result.add(getRecord(cursor));
         }
@@ -108,16 +110,46 @@ public class SingleGameDAO {
     // WHERE tg.tag_name = ‘Watchlist’ AND tg.id = tt.tag_id AND td.id = tt.todo_id", null);
 
     public List<SingleGameItem> getAllByGameId(long gameId) {
-        List<SingleGameItem> result = new ArrayList<SingleGameItem>();
-        String selectQuery = "SELECT * FROM " + TABLE_SGAME + " ts WHERE ts." + GAME_ID + " = " + gameId;
+        List<SingleGameItem> result = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SGAME + " WHERE " + GAME_ID + " = '" + gameId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
-        while (cursor.moveToNext()) {
-            result.add(getRecord(cursor));
+        if (cursor != null && cursor.moveToFirst()) {
+            cursor.moveToFirst();
+
+            //SingleGameItem mSingleGameItem = new SingleGameItem();
+            do {
+                result.add(getRecord(cursor));
+            } while (cursor.moveToNext());
+            cursor.close();
         }
-        cursor.close();
         return result;
     }
+
+    public Integer getAllColumnScoreSum(String selectedColumn) {
+        String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        Integer total = cursor.getInt(cursor.getColumnIndex("myTotal"));
+        Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
+        cursor.close();
+        return total;
+    }
+
+    public Integer getColScoreSumByGameId(String selectedColumn, long gameId) {
+        String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        Integer total = cursor.getInt(cursor.getColumnIndex("myTotal"));
+        Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
+        cursor.moveToFirst();
+        cursor.close();
+        return total;
+    }
+
 
     public SingleGameItem get(long id) {
         SingleGameItem item = null;
@@ -160,7 +192,7 @@ public class SingleGameDAO {
         SingleGameItem item6 = new SingleGameItem(5, 1, 0, 0, 48, 0, 0, -48);
         SingleGameItem item7 = new SingleGameItem(6, 5, 0, 0, 60, 0, 0, -60);
         SingleGameItem item8 = new SingleGameItem(7, 6, 0, 0, 64, 0, 0, -64);
-        SingleGameItem item9 = new SingleGameItem(8, 7, 0, 0, 96, 0, 0, -72);
+        SingleGameItem item9 = new SingleGameItem(8, 7, 0, 0, 72, 0, 0, -72);
         SingleGameItem item10 = new SingleGameItem(9, 8, 0, 0, 96, 0, 0, -96);
 
 

@@ -43,10 +43,10 @@ public class GameListDAO {
                     PLAYER4SCORE + " INTEGER)";
     /**
      * "CREATE TABLE gamelistitem (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-     * "gametitle TEXT NOT NULL, createtime INTEGER NOT NULL, " +
-     * "lastmodify INTEGER, player1 TEXT NOT NULL, " +
-     * "player2 TEXT NOT NULL, player3 TEXT, player4 TEXT, player1score INTEGER NOT NULL, player2score INTEGER NOT NULL, player3score INTEGER, player4score INTEGER)";
-     **/
+            * "gametitle TEXT NOT NULL, createtime INTEGER NOT NULL, " +
+            * "lastmodify INTEGER, player1 TEXT NOT NULL, " +
+            * "player2 TEXT NOT NULL, player3 TEXT, player4 TEXT, player1score INTEGER NOT NULL, player2score INTEGER NOT NULL, player3score INTEGER, player4score INTEGER)";
+            **/
 
     private SQLiteDatabase db;
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +23,21 @@ public class TabAFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Bundle bundle;
     private GameListItem mGameListItem;
+    private SingleGameItem mSingleGameItem;
+    private SingleGameDAO mSingleGameDAO;
     private String KEY_GAMELISTITEM = "GameListItem";
+    private String KEY_SINGLEGAMEITEM = "SingleGameItem";
     private String gameTitle;
+    private long gameId;
     private String player1;
     private String player2;
     private String player3;
     private String player4;
+    private String p1FinalScore;
+    private String p2FinalScore;
+    private String p3FinalScore;
+    private String p4FinalScore;
+
 
 
     public TabAFragment() {
@@ -50,11 +58,18 @@ public class TabAFragment extends Fragment {
         if (getArguments() != null) {
             bundle = getArguments();
             mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
+            mSingleGameItem = (SingleGameItem) bundle.getSerializable(KEY_SINGLEGAMEITEM);
+            gameId = mGameListItem.getId();
+            mSingleGameDAO = new SingleGameDAO(getContext());
             gameTitle = mGameListItem.getGameTitle();
             player1 = mGameListItem.getPlayer1();
             player2 = mGameListItem.getPlayer2();
             player3 = mGameListItem.getPlayer3();
             player4 = mGameListItem.getPlayer4();
+            p1FinalScore = mSingleGameDAO.getColScoreSumByGameId("p1rscore", gameId).toString();
+            p2FinalScore = mSingleGameDAO.getColScoreSumByGameId("p2rscore", gameId).toString();
+            p3FinalScore = mSingleGameDAO.getColScoreSumByGameId("p3rscore", gameId).toString();
+            p4FinalScore = mSingleGameDAO.getColScoreSumByGameId("p4rscore", gameId).toString();
 
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -83,11 +98,18 @@ public class TabAFragment extends Fragment {
         tv_player2.setText(player2);
         tv_player3.setText(player3);
         tv_player4.setText(player4);
+        tv_player1FinalScore.setText(p1FinalScore);
+        tv_player2FinalScore.setText(p2FinalScore);
+        tv_player3FinalScore.setText(p3FinalScore);
+        tv_player4FinalScore.setText(p4FinalScore);
+
+        /*
+        deprecating with using singleGameItem
         tv_player1FinalScore.setText(String.valueOf(0));
         tv_player2FinalScore.setText(String.valueOf(0));
         tv_player3FinalScore.setText(String.valueOf(mGameListItem.getPlayer3FinalScore()));
         tv_player4FinalScore.setText(String.valueOf(mGameListItem.getPlayer4FinalScore()));
-
+        */
 
         /**
         tv_player1FinalScore.setText(mGameListItem.getPlayer1FinalScore());

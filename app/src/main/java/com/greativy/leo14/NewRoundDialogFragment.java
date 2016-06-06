@@ -1,5 +1,6 @@
 package com.greativy.leo14;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -15,12 +16,13 @@ import android.widget.Toast;
 import java.util.List;
 
 public class NewRoundDialogFragment extends DialogFragment {
-    OnItemSubmitListener mListener =null;
+    OnItemSubmitListener mListener;
     private NumberPicker numberPicker_score;
     private NumberPicker numberPicker_name;
     private NumberPicker numberPicker_name2;
     private NumberPicker numberPicker_scoreType;
     private Button button_RoundSubmit;
+    private Button button_Cancel;
     private String KEY_GAMELISTITEM = "GameListItem";
     private List<SingleGameItem> mSingleGameItems;
     private GameListItem mGameListItem;
@@ -38,9 +40,7 @@ public class NewRoundDialogFragment extends DialogFragment {
     private int ScoreTypeValue;
     private int ScoreValue;
     private long gameId;
-    private Boolean CreateNewRound;
-
-    final String[] scoreType = new String[]{"食", "自摸", "出", "包"};
+    final String[] scoreType = new String[]{"食", "自摸", "包"};
     String[] scoreLevel = new String[]{"3", "4", "5", "6", "7", "8", "9", "10"};
     int[][] scoreLevel2 = new int[][]{{3, 4, 5, 6, 7, 8, 9, 10},
             {8, 16, 24, 36, 48, 64, 80, 128}, {4, 8, 12, 16, 24, 32, 48, 64}};
@@ -61,6 +61,17 @@ public class NewRoundDialogFragment extends DialogFragment {
 
         }
     }
+    @Override
+    public void onStart(){
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
 
 
 
@@ -68,6 +79,14 @@ public class NewRoundDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_round, container);
+        button_Cancel = (Button) view.findViewById(R.id.button_RoundCancel);
+        button_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+
+            }
+        });
         button_RoundSubmit = (Button) view.findViewById(R.id.button_RoundSubmit);
         button_RoundSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +103,12 @@ public class NewRoundDialogFragment extends DialogFragment {
                 ScoreTypeValue = numberPicker_scoreType.getValue();
                 ScoreValue = numberPicker_score.getValue();
                 Toast.makeText(getContext(), NameValue + " " + ScoreValue + ScoreTypeValue + Name2Value, Toast.LENGTH_LONG).show();
+                mSingleGameItem.setScoreType(ScoreTypeValue);
 
                 switch (ScoreTypeValue) {
                     default:
                         break;
                     case 0:
-                        mSingleGameItem.setScoreType(ScoreTypeValue);
                         if (NameValue == 0 && Name2Value == 1) {
                             mSingleGameItem.setPlayer1RoundScore(scoreLevel2[1][ScoreValue]);
                             mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[1][ScoreValue]);
@@ -155,16 +174,12 @@ public class NewRoundDialogFragment extends DialogFragment {
                             mSingleGameItem.setPlayer4RoundScore(scoreLevel2[1][ScoreValue]);
                         }
                         mSingleGameDAO.insert(mSingleGameItem);
-                        CreateNewRound= true;
-                        /**TODO fix NPE */
-
                         mListener.onDialogFragmentInteraction(mSingleGameItem);
                         //mRoundListRecyclerViewAdapter.notifyItemInserted(mSingleGameDAO.getAll().size()+1);
                         break;
 
                     case 1:
-                        Log.i("Case 1 Happen","Case 1 Happen, scoreType is "+ScoreTypeValue);
-                        mSingleGameItem.setScoreType(ScoreTypeValue);
+                        Log.i("DialogFragment","Case 1 Happen, scoreType is "+ScoreTypeValue);
                         switch (NameValue) {
                             default:
                                 Log.i("NameValue Exception","default throwout");
@@ -174,37 +189,111 @@ public class NewRoundDialogFragment extends DialogFragment {
                                 mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameDAO.insert(mSingleGameItem);
                                 break;
                             case 1:
                                 mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer2RoundScore(scoreLevel2[2][ScoreValue]*3);
                                 mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameDAO.insert(mSingleGameItem);
                                 break;
                             case 2:
                                 mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer3RoundScore(scoreLevel2[2][ScoreValue]*3);
                                 mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]);
+                                mSingleGameDAO.insert(mSingleGameItem);
                                 break;
                             case 3:
                                 mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]);
                                 mSingleGameItem.setPlayer4RoundScore(scoreLevel2[2][ScoreValue]*3);
+                                mSingleGameDAO.insert(mSingleGameItem);
                                 break;
 
 
                         }
-                        mSingleGameDAO.insert(mSingleGameItem);
-                        CreateNewRound= true;
-
                         mListener.onDialogFragmentInteraction(mSingleGameItem);
 
                         break;
+                    case 2:
+                        Log.i("DialogFragment","Case 2 happens, & scoreType is "+ScoreTypeValue);
+                        if (NameValue == 0 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 0 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 0 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[2][ScoreValue]*3);
+                        } else
+                        if (NameValue == 1 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 1 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 1 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[2][ScoreValue]*3);
+                        } else
+                        if (NameValue == 2 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 2 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(0);
+                        } else if (NameValue == 2 && Name2Value == 3) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(scoreLevel2[2][ScoreValue]*3);
+                        } else
+                        if (NameValue == 3 && Name2Value == 0) {
+                            mSingleGameItem.setPlayer1RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                        } else if (NameValue == 3 && Name2Value == 1) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer3RoundScore(0);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                        } else if (NameValue == 3 && Name2Value == 2) {
+                            mSingleGameItem.setPlayer1RoundScore(0);
+                            mSingleGameItem.setPlayer2RoundScore(0);
+                            mSingleGameItem.setPlayer3RoundScore(scoreLevel2[2][ScoreValue]*3);
+                            mSingleGameItem.setPlayer4RoundScore(-scoreLevel2[2][ScoreValue]*3);
+                        }
+                        mSingleGameDAO.insert(mSingleGameItem);
+                        mListener.onDialogFragmentInteraction(mSingleGameItem);
+                        //mRoundListRecyclerViewAdapter.notifyItemInserted(mSingleGameDAO.getAll().size()+1);
+                        break;
+
+
+
                 }
 
-
+            dismiss();
             }
         });
 
@@ -258,7 +347,7 @@ public class NewRoundDialogFragment extends DialogFragment {
         /** findView for numberPicker Round Type and setup */
         numberPicker_scoreType = (NumberPicker) view.findViewById(R.id.numberPicker_roundType);
         numberPicker_scoreType.setMinValue(0);
-        numberPicker_scoreType.setMaxValue(3); /**自膜，食糊 */
+        numberPicker_scoreType.setMaxValue(scoreType.length-1); /**自膜，食糊 */
         numberPicker_scoreType.setDisplayedValues(scoreType);
         numberPicker_scoreType.setWrapSelectorWheel(false);
         numberPicker_scoreType.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -304,6 +393,7 @@ public class NewRoundDialogFragment extends DialogFragment {
 
 
     }
+
 
     public interface OnItemSubmitListener {
         // TODO: Update argument type and name

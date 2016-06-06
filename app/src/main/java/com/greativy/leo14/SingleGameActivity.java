@@ -1,11 +1,8 @@
 package com.greativy.leo14;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -21,6 +18,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener, TabBFragment.OnItemClickListener,NewRoundDialogFragment.OnItemSubmitListener {
 
@@ -40,28 +39,24 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
     private ViewPager mViewPager;
     private android.support.design.widget.TabLayout mTabs;
     private String KEY_GAMELISTITEM = "GameListItem";
-    private Bundle bundle;
-    Bundle arg = new Bundle();
+    private String KEY_SINGLEGAMEITEM = "SingleGameItem";
+    private Bundle bundle_newRound;
+    private Bundle bundle_tabs = new Bundle();
 
 
 
 
 
-    public void onListFragmentInteraction(SingleGameItem item) {
+    public void onListFragmentInteraction(List<SingleGameItem> items) {
 
         //you can leave it empty
     }
 
     public void onDialogFragmentInteraction(SingleGameItem mSingleGameItem) {
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment tabBFragment = new TabBFragment();
-        tabBFragment.setArguments(arg);
-        fragmentManager.beginTransaction()
-                    .replace(R.id.recyclerview_sgame, tabBFragment, "tabBFragment")
-                    .commit();
-                    */
-
-
+        bundle_tabs.putSerializable(KEY_SINGLEGAMEITEM,mSingleGameItem);
+        tabBFragment.setArguments(bundle_tabs);
     }
         //you can leave it empty
 
@@ -78,17 +73,17 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
         /** get the Intent and pass to Bundle*/
         Intent intent = getIntent();
-        GameListItem item = (GameListItem) intent.getExtras().getSerializable("GameListItem");
-        bundle = new Bundle();
-        bundle.putSerializable(KEY_GAMELISTITEM, item);
+        GameListItem mGameListItem = (GameListItem) intent.getExtras().getSerializable("GameListItem");
+        bundle_newRound = new Bundle();
+        bundle_newRound.putSerializable(KEY_GAMELISTITEM, mGameListItem);
         /** setup toolbar title */
-        setTitle(item.getGameTitle());
+        setTitle(mGameListItem.getGameTitle());
         /** test the correct GameListItem Id by toast*/
-        Toast.makeText(getApplicationContext(), String.valueOf(item.getId()), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(mGameListItem.getId()), Toast.LENGTH_LONG).show();
         /** setup viewpager and pass the FragmentPagerAdapter into it, and setup the tabs */
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
-        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(), item);
+        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(), mGameListItem);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabs.setupWithViewPager(mViewPager);
         /** setup floating action button with onClick method */
@@ -98,7 +93,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
             public void onClick(View view) {
 
                 NewRoundDialogFragment editNameDialog = new NewRoundDialogFragment();
-                editNameDialog.setArguments(bundle);
+                editNameDialog.setArguments(bundle_newRound);
                 editNameDialog.show(getSupportFragmentManager(), "EditNameDialog");
 
             }
@@ -185,18 +180,18 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
         @Override
         public Fragment getItem(int position) {
-            arg.putSerializable(KEY_GAMELISTITEM, item);
+            bundle_tabs.putSerializable(KEY_GAMELISTITEM, item);
 
             switch (position) {
                 case 0:
 
                     TabAFragment tabAFragment = new TabAFragment();
-                    tabAFragment.setArguments(arg);
+                    tabAFragment.setArguments(bundle_tabs);
                     return tabAFragment;
                 case 1:
 
                     TabBFragment tabBFragment = new TabBFragment();
-                    tabBFragment.setArguments(arg);
+                    tabBFragment.setArguments(bundle_tabs);
                     return tabBFragment;
                 case 2:
                     return PlaceholderFragment.newInstance(position + 1);

@@ -46,7 +46,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
         SingleGameItem singleGameItem = sGameItems.get(position);
         //viewHolder.ScoreType.setText(mValues.get(position).id);
         //viewHolder.mContentView.setText(mValues.get(position).content);
-        viewHolder.ScoreType.setText(singleGameItem.getScoreType().toString());
+        //viewHolder.ScoreType.setText(singleGameItem.getScoreType().toString());
         viewHolder.p1rScore.setText(singleGameItem.getPlayer1RoundScore().toString());
         viewHolder.p2rScore.setText(singleGameItem.getPlayer2RoundScore().toString());
         viewHolder.p3rScore.setText(singleGameItem.getPlayer3RoundScore().toString());
@@ -93,7 +93,7 @@ public class RoundListRecyclerViewAdapter extends RecyclerView.Adapter<RoundList
         public ViewHolder(View view) {
             super(view);
             //mView = view;
-            ScoreType = (TextView) view.findViewById(R.id.scoreType);
+            //ScoreType = (TextView) view.findViewById(R.id.scoreType);
             p1rScore = (TextView) view.findViewById(R.id.p1rScore);
             p2rScore = (TextView) view.findViewById(R.id.p2rScore);
             p3rScore = (TextView) view.findViewById(R.id.p3rScore);
