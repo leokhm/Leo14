@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class SingleGameActivity extends AppCompatActivity implements TabAFragment.OnFragmentInteractionListener, TabBFragment.OnItemClickListener,NewRoundDialogFragment.OnItemSubmitListener {
+public class SingleGameActivity extends AppCompatActivity implements StatFragment.OnFragmentInteractionListener, RoundFragment.OnItemClickListener,NewRoundDialogFragment.OnItemSubmitListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -54,7 +54,7 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
     public void onDialogFragmentInteraction(SingleGameItem mSingleGameItem) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment tabBFragment = new TabBFragment();
+        Fragment tabBFragment = new RoundFragment();
         bundle_tabs.putSerializable(KEY_SINGLEGAMEITEM,mSingleGameItem);
         tabBFragment.setArguments(bundle_tabs);
     }
@@ -184,15 +184,15 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
 
             switch (position) {
                 case 0:
+                    RoundFragment roundFragment = new RoundFragment();
+                    roundFragment.setArguments(bundle_tabs);
+                    return roundFragment;
 
-                    TabAFragment tabAFragment = new TabAFragment();
-                    tabAFragment.setArguments(bundle_tabs);
-                    return tabAFragment;
                 case 1:
+                    StatFragment statFragment = new StatFragment();
+                    statFragment.setArguments(bundle_tabs);
+                    return statFragment;
 
-                    TabBFragment tabBFragment = new TabBFragment();
-                    tabBFragment.setArguments(bundle_tabs);
-                    return tabBFragment;
                 case 2:
                     return PlaceholderFragment.newInstance(position + 1);
             }
@@ -209,11 +209,11 @@ public class SingleGameActivity extends AppCompatActivity implements TabAFragmen
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Stat";
+                    return getString(R.string.round);
                 case 1:
-                    return "Round";
+                    return getString(R.string.stat);
                 case 2:
-                    return "More";
+                    return getString(R.string.more);
             }
             return null;
         }

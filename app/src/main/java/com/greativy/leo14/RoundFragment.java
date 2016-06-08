@@ -23,7 +23,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnItemClickListener}
  * interface.
  */
-public class TabBFragment extends Fragment {
+public class RoundFragment extends Fragment {
 
 
     OnItemClickListener mListener;
@@ -40,21 +40,25 @@ public class TabBFragment extends Fragment {
     private String player3;
     private String player4;
     private RecyclerView recyclerView;
+    private static final int PLAYER = 0;
+    private static final int SCORE = 1;
+    private int mDatasetTypes[] = {PLAYER, SCORE}; //view types
+
 
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TabBFragment() {
+    public RoundFragment() {
 
     }
 
     /**
      * // TODO: Customize parameter initialization
      *
-     * @SuppressWarnings("unused") public static TabBFragment newInstance() {
-     * TabBFragment fragment = new TabBFragment();
+     * @SuppressWarnings("unused") public static RoundFragment newInstance() {
+     * RoundFragment fragment = new RoundFragment();
      * //Bundle args = new Bundle();
      * //args.putInt(ARG_COLUMN_COUNT, columnCount);
      * //fragment.setArguments(args);
@@ -102,21 +106,21 @@ public class TabBFragment extends Fragment {
             }
             /** TODO:can't getAll by gameId
              */
-            Log.i("TabBFragment", "total game is " + String.valueOf(singleGameDAO.getCount()));
+            Log.i("RoundFragment", "total game is " + String.valueOf(singleGameDAO.getCount()));
             items = singleGameDAO.getAllByGameId(mGameListItem.getId());
-            Log.i("TabBFragment", " in Game " + mGameListItem.getId());
-            Log.i("TabBFragment", " Game " + mGameListItem.getId() + " has items " + items.size());
+            Log.i("RoundFragment", " in Game " + mGameListItem.getId());
+            Log.i("RoundFragment", " Game " + mGameListItem.getId() + " has items " + items.size());
 
 
             roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void clickOnView(View v, int position) {
                     SingleGameItem item = items.get(position);
-
                     Snackbar.make(v, "test", Snackbar.LENGTH_LONG).show();
-
-
                 }
+
+
+
             });
             mListener.onListFragmentInteraction(items);
 
@@ -157,7 +161,6 @@ public class TabBFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnItemClickListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(List<SingleGameItem> items);
     }
 

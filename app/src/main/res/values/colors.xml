@@ -6,7 +6,8 @@
     <color name="background_material_light">#FFFFFF</color>
     <color name="background_material_dark">#000000</color>
     <color name="highlight">#d578df</color>
-    <color name="light_grey_text">#8e8e8e</color>
+    <color name="light_grey_text">#e0e0e0</color>
+    <color name="mid_grey_text">#8e8e8e</color>
     <color name="dark_grey_text">#565656</color>
     <color name="btn_color_cancel">#FDFDFD</color>
 </resources>

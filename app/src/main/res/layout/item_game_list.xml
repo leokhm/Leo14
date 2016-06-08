@@ -1,71 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:card_view="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/card_view"
-android:layout_width="match_parent"
-android:layout_height="100dp"
-android:background="?android:attr/selectableItemBackground"
-card_view:cardCornerRadius="5dp"
-card_view:cardElevation="4dp"
-card_view:cardUseCompatPadding="true"
-card_view:contentPadding="5dp">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    card_view:cardCornerRadius="1dp"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="5dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <TextView
-            android:text="GameTitle"
+            android:id="@+id/tv_GameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/tv_GameTitle" />
+            android:text="GameTitle" />
 
         <TextView
-            android:text="Player1"
+            android:id="@+id/tv_Player1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/tv_Player1" />
+            android:ellipsize="marquee"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:text="Player1" />
 
         <TextView
-            android:text="Player2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_Player2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_Player1"
-            android:layout_alignParentStart="true" />
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:maxLines="1"
+
+            android:text="Player2" />
 
         <TextView
-            android:text="Player3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_Player3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:ellipsize="marquee"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:text="Player3" />
 
         <TextView
-            android:text="Player4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_Player4"
-            android:layout_below="@+id/tv_Player3"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:text="dateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/tv_Player3"
+            android:layout_centerHorizontal="true"
+            android:ellipsize="marquee"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:maxLines="1"
+
+            android:text="Player4" />
+
+        <TextView
+            android:id="@+id/tv_Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:id="@+id/tv_Date" />
+            android:layout_alignParentTop="true"
+            android:singleLine="true"
+            android:text="dateTime" />
     </RelativeLayout>
-
-
 
 
 </android.support.v7.widget.CardView>

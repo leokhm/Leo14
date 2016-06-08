@@ -13,12 +13,12 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TabAFragment.OnFragmentInteractionListener} interface
+ * {@link StatFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TabAFragment#newInstance} factory method to
+ * Use the {@link StatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TabAFragment extends Fragment {
+public class StatFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private Bundle bundle;
@@ -39,13 +39,12 @@ public class TabAFragment extends Fragment {
     private String p4FinalScore;
 
 
-
-    public TabAFragment() {
+    public StatFragment() {
 
     }
 
-    public static TabAFragment newInstance() {
-        TabAFragment fragment = new TabAFragment();
+    public static StatFragment newInstance() {
+        StatFragment fragment = new StatFragment();
         //Bundle args = new Bundle();
         //fragment.setArguments(args);
         return fragment;
@@ -66,10 +65,10 @@ public class TabAFragment extends Fragment {
             player2 = mGameListItem.getPlayer2();
             player3 = mGameListItem.getPlayer3();
             player4 = mGameListItem.getPlayer4();
-            p1FinalScore = mSingleGameDAO.getColScoreSumByGameId("p1rscore", gameId).toString();
-            p2FinalScore = mSingleGameDAO.getColScoreSumByGameId("p2rscore", gameId).toString();
-            p3FinalScore = mSingleGameDAO.getColScoreSumByGameId("p3rscore", gameId).toString();
-            p4FinalScore = mSingleGameDAO.getColScoreSumByGameId("p4rscore", gameId).toString();
+            p1FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p1rscore", gameId).toString();
+            p2FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p2rscore", gameId).toString();
+            p3FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p3rscore", gameId).toString();
+            p4FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p4rscore", gameId).toString();
 
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -112,12 +111,12 @@ public class TabAFragment extends Fragment {
         */
 
         /**
-        tv_player1FinalScore.setText(mGameListItem.getPlayer1FinalScore());
-        tv_player2FinalScore.setText(mGameListItem.getPlayer2FinalScore());
-        tv_player3FinalScore.setText(mGameListItem.getPlayer3FinalScore());
-        tv_player4FinalScore.setText(mGameListItem.getPlayer4FinalScore());
+         tv_player1FinalScore.setText(mGameListItem.getPlayer1FinalScore());
+         tv_player2FinalScore.setText(mGameListItem.getPlayer2FinalScore());
+         tv_player3FinalScore.setText(mGameListItem.getPlayer3FinalScore());
+         tv_player4FinalScore.setText(mGameListItem.getPlayer4FinalScore());
 
-        */
+         */
 
 
         // Inflate the layout for this fragment

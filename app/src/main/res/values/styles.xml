@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/light_grey_text</item>
+        <item name="android:textColor">@color/mid_grey_text</item>
         <item name="android:textColorPrimary">@color/dark_grey_text</item>
     </style>
 
@@ -45,14 +45,14 @@
 
     <style name="MyButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/highlight</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-        <item name="android:textColor">@color/light_grey_text</item>
+        <item name="colorButtonNormal">@color/background_material_light</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="MyCancelButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/highlight</item>
-        <item name="colorButtonNormal">@color/btn_color_cancel</item>
-        <item name="android:textColor">@color/dark_grey_text</item>
+        <item name="colorButtonNormal">@color/background_material_light</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>
