@@ -15,15 +15,15 @@ import java.util.List;
 
 public class SingleGameDAO {
 
-    public static final String TABLE_SGAME = "singlegameitem";
-    public static final String KEY_ID = "_sgid";
-    public static final String GAME_ID = "gameid";
-    public static final String GAMETYPE = "gametype";
-    public static final String ROUNDSCORETYPE = "roundscoretype";
-    public static final String PLAYER1ROUNDSCORE = "p1rscore";
-    public static final String PLAYER2ROUNDSCORE = "p2rscore";
-    public static final String PLAYER3ROUNDSCORE = "p3rscore";
-    public static final String PLAYER4ROUNDSCORE = "p4rscore";
+    private static final String TABLE_SGAME = "singlegameitem";
+    private static final String KEY_ID = "_sgid";
+    private static final String GAME_ID = "gameid";
+    private static final String GAMETYPE = "gametype";
+    private static final String ROUNDSCORETYPE = "roundscoretype";
+    private static final String PLAYER1ROUNDSCORE = "p1rscore";
+    private static final String PLAYER2ROUNDSCORE = "p2rscore";
+    private static final String PLAYER3ROUNDSCORE = "p3rscore";
+    private static final String PLAYER4ROUNDSCORE = "p4rscore";
 
     public static final String CREATE_TABLE2 =
             "CREATE TABLE " + TABLE_SGAME + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -36,6 +36,7 @@ public class SingleGameDAO {
 
     public SingleGameDAO(Context context) {
         db = DBHelper.getDatabase(context);
+
     }
 
     public void close() {
@@ -175,6 +176,8 @@ public class SingleGameDAO {
         if (cursor.moveToNext()) {
             result = cursor.getInt(0);
         }
+        cursor.close();
+
 
         return result;
     }

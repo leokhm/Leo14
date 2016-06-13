@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Fan and Amount">
+        <MultiSelectListPreference
+            android:title="Multi select list preference"
+            android:defaultValue="@array/fans"
+            android:entries="@array/fans"
+            android:entryValues="@array/fans"
+            android:key="multi_select_list_preference_1" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="minFan"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Min Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="maxFan"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Max Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="1st Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan2"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="2nd Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan3"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="3rd Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan4"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="4th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan5"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="5th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan6"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="6th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan7"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="7th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan8"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="8th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan9"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="9th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan10"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="10th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan11"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="11th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan12"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="12th Score" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="fan13"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="13th Score" />
+
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    style="@style/CustomDialog">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,32 +16,60 @@
             android:id="@+id/numberPicker_name"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_weight="4"
-            />
+            android:layout_weight="4" />
 
         <com.greativy.leo14.CustomNumberPicker
             android:id="@+id/numberPicker_roundType"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_toEndOf="@+id/numberPicker_name"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <com.greativy.leo14.CustomNumberPicker
             android:id="@+id/numberPicker_name2"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_weight="4"
-            />
+            android:layout_weight="4" />
 
         <com.greativy.leo14.CustomNumberPicker
             android:id="@+id/numberPicker_score"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:layout_weight="1"
-             />
+            android:layout_weight="1" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/Player1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/score_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/Player2"
+            android:id="@+id/tv_dialog2ndPlayer"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/score_level_unit" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/button_RoundSubmit"

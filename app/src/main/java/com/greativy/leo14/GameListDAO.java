@@ -13,19 +13,19 @@ import java.util.List;
  * Created by leokh on 4/30/2016.
  */
 public class GameListDAO {
-    public static final String TABLE_NAME = "gamelistitem";
-    public static final String KEY_ID = "_id";
-    public static final String GAME_TITLE = "gametitle";
-    public static final String CREATE_TIME = "createtime";
-    public static final String LAST_MODIFY = "lastmodify";
-    public static final String PLAYER1NAME = "player1name";
-    public static final String PLAYER2NAME = "player2name";
-    public static final String PLAYER3NAME = "player3name";
-    public static final String PLAYER4NAME = "player4name";
-    public static final String PLAYER1SCORE = "player1score";
-    public static final String PLAYER2SCORE = "player2score";
-    public static final String PLAYER3SCORE = "player3score";
-    public static final String PLAYER4SCORE = "player4score";
+    private static final String TABLE_NAME = "gamelistitem";
+    private static final String KEY_ID = "_id";
+    private static final String GAME_TITLE = "gametitle";
+    private static final String CREATE_TIME = "createtime";
+    private static final String LAST_MODIFY = "lastmodify";
+    private static final String PLAYER1NAME = "player1name";
+    private static final String PLAYER2NAME = "player2name";
+    private static final String PLAYER3NAME = "player3name";
+    private static final String PLAYER4NAME = "player4name";
+    private static final String PLAYER1SCORE = "player1score";
+    private static final String PLAYER2SCORE = "player2score";
+    private static final String PLAYER3SCORE = "player3score";
+    private static final String PLAYER4SCORE = "player4score";
 
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -152,7 +152,7 @@ public class GameListDAO {
         if (cursor.moveToNext()) {
             result = cursor.getInt(0);
         }
-
+        cursor.close();
         return result;
     }
 

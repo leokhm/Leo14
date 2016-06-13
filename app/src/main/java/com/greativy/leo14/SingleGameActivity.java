@@ -1,64 +1,69 @@
 package com.greativy.leo14;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import android.os.Handler;
 
-public class SingleGameActivity extends AppCompatActivity implements StatFragment.OnFragmentInteractionListener, RoundFragment.OnItemClickListener,NewRoundDialogFragment.OnItemSubmitListener {
+public class SingleGameActivity extends AppCompatActivity implements StatFragment.OnFragmentInteractionListener, RoundFragment.OnItemClickListener, NewRoundDialogFragment.OnItemSubmitListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private mFragmentPagerAdapter mFragmentPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private SingleGameDAO mSingleGameDAO;
+    private SingleGameItem mSingleGameItem;
     private android.support.design.widget.TabLayout mTabs;
     private String KEY_GAMELISTITEM = "GameListItem";
     private String KEY_SINGLEGAMEITEM = "SingleGameItem";
     private Bundle bundle_newRound;
-    private Bundle bundle_tabs = new Bundle();
-
-
-
-
 
     public void onListFragmentInteraction(List<SingleGameItem> items) {
+        Log.i("SingleGameAcitivty", "onListFragmentInteraction");
 
         //you can leave it empty
     }
 
     public void onDialogFragmentInteraction(SingleGameItem mSingleGameItem) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment tabBFragment = new RoundFragment();
-        bundle_tabs.putSerializable(KEY_SINGLEGAMEITEM,mSingleGameItem);
-        tabBFragment.setArguments(bundle_tabs);
+        if(mSingleGameItem != null) {
+            mSingleGameDAO = new SingleGameDAO(getApplicationContext());
+            Log.i("SingleGameAcitivty", "onDialogFragmentInteraction");
+            final RecyclerView mRecyclerView;
+            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_singleGame);
+            mSingleGameDAO.insert(mSingleGameItem);
+            // TODO fix recyclerview refresh animation
+            mRecyclerView.getAdapter().notifyItemInserted(1);
+            mRecyclerView.scrollToPosition(1);
+            mFragmentPagerAdapter.notifyDataSetChanged();
+            mViewPager.setAdapter(mFragmentPagerAdapter);
+
+
+        }
+        //mViewPager.setAdapter(mFragmentPagerAdapter);
+
+        //Toast.makeText(this, mSingleGameItem.getPlayer1RoundScore(), Toast.LENGTH_LONG).show();
     }
-        //you can leave it empty
+    //you can leave it empty
 
 
     public void onFragmentInteraction() {
@@ -77,13 +82,13 @@ public class SingleGameActivity extends AppCompatActivity implements StatFragmen
         bundle_newRound = new Bundle();
         bundle_newRound.putSerializable(KEY_GAMELISTITEM, mGameListItem);
         /** setup toolbar title */
-        setTitle(mGameListItem.getGameTitle());
+        setTitle(getString(R.string.app_name) + " " + mGameListItem.getGameTitle());
         /** test the correct GameListItem Id by toast*/
-        Toast.makeText(getApplicationContext(), String.valueOf(mGameListItem.getId()), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(mGameListItem.getGameTitle()) + " - ID " + String.valueOf(mGameListItem.getId()), Toast.LENGTH_LONG).show();
         /** setup viewpager and pass the FragmentPagerAdapter into it, and setup the tabs */
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
-        mFragmentPagerAdapter = new mFragmentPagerAdapter(getSupportFragmentManager(), mGameListItem);
+        mFragmentPagerAdapter = new mFragmentPagerAdapter(getApplicationContext(), getSupportFragmentManager(), mGameListItem);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabs.setupWithViewPager(mViewPager);
         /** setup floating action button with onClick method */
@@ -157,9 +162,9 @@ public class SingleGameActivity extends AppCompatActivity implements StatFragmen
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tab_c, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.fragment_tab_a, container, false);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
 
             return rootView;
@@ -170,28 +175,26 @@ public class SingleGameActivity extends AppCompatActivity implements StatFragmen
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class mFragmentPagerAdapter extends FragmentPagerAdapter {
-        public GameListItem item;
+    public static class mFragmentPagerAdapter extends FragmentPagerAdapter {
+        public GameListItem mGameListItem;
+        public Context context;
+        public SingleGameItem mSingleGameItem;
 
-        public mFragmentPagerAdapter(FragmentManager fm, GameListItem item) {
+        public mFragmentPagerAdapter(Context context, FragmentManager fm, GameListItem mGameListItem) {
             super(fm);
-            this.item = item;
+            this.context = context;
+            this.mGameListItem = mGameListItem;
         }
 
         @Override
         public Fragment getItem(int position) {
-            bundle_tabs.putSerializable(KEY_GAMELISTITEM, item);
-
             switch (position) {
                 case 0:
-                    RoundFragment roundFragment = new RoundFragment();
-                    roundFragment.setArguments(bundle_tabs);
-                    return roundFragment;
+                    return RoundFragment.newInstance(mGameListItem);
 
                 case 1:
-                    StatFragment statFragment = new StatFragment();
-                    statFragment.setArguments(bundle_tabs);
-                    return statFragment;
+
+                    return StatFragment.newInstance(mGameListItem);
 
                 case 2:
                     return PlaceholderFragment.newInstance(position + 1);
@@ -209,14 +212,19 @@ public class SingleGameActivity extends AppCompatActivity implements StatFragmen
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.round);
+                    return context.getString(R.string.round);
                 case 1:
-                    return getString(R.string.stat);
+                    return context.getString(R.string.stat);
                 case 2:
-                    return getString(R.string.more);
+                    return context.getString(R.string.more);
             }
             return null;
         }
-    }
 
+
+
+
+
+
+    }
 }

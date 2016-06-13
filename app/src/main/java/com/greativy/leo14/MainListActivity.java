@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -29,7 +33,6 @@ public class MainListActivity extends AppCompatActivity {
     private GameListDAO gameListDAO;
     private List<GameListItem> items;
     private GameListAdapter gameListAdapter;
-    private Fragment fragment;
     private SwipeRefreshLayout refreshLayout;
     private final int splashTime = 1000;
     private GameListRecyclerAdapter gameListRecyclerAdapter;
@@ -71,12 +74,11 @@ public class MainListActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("GameListItem",item);
+                bundle.putSerializable("GameListItem", item);
                 intent.putExtras(bundle);
-                intent.putExtra("position",position);
+                intent.putExtra("position", position);
                 intent.setClass(MainListActivity.this, SingleGameActivity.class);
                 startActivity(intent);
-
 
 
             }
@@ -112,7 +114,7 @@ public class MainListActivity extends AppCompatActivity {
 
                     }
                 };
-                h.postDelayed(r,splashTime);
+                h.postDelayed(r, splashTime);
             }
         });
     }
@@ -128,7 +130,7 @@ public class MainListActivity extends AppCompatActivity {
                 GameListItem item = gameListAdapter.getItem(position);
 
                 Intent intent = new Intent();
-                intent.putExtra("position",position);
+                intent.putExtra("position", position);
                 intent.putExtra("com.greativy.leo14.GamelistItem", item);
                 intent.setClass(MainListActivity.this, SingleGameActivity.class);
                 startActivity(intent);
@@ -180,12 +182,12 @@ public class MainListActivity extends AppCompatActivity {
 
     }
 
-    public void toolbar1() {
+    private void toolbar1() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    public void fab() {
+    private void fab() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,10 +206,10 @@ public class MainListActivity extends AppCompatActivity {
                     "com.greativy.leo14.GameListItem");
             if (requestCode == 0) {
                 item.setId(items.size() + 1);
-                items.add(0,item);
+                items.add(0, item);
                 //gameListAdapter.notifyDataSetChanged();
                 gameListRecyclerAdapter.notifyItemInserted(0);
-                recyclerView.smoothScrollToPosition(0);
+                recyclerView.scrollToPosition(0);
 
 
             } else if (requestCode == 1) {
@@ -216,7 +218,7 @@ public class MainListActivity extends AppCompatActivity {
                 if (position != -1) {
                     items.set(position, item);
                     //gameListAdapter.notifyDataSetChanged();
-                    gameListRecyclerAdapter.notifyItemInserted(items.size() +1);
+                    gameListRecyclerAdapter.notifyItemInserted(items.size() + 1);
                 }
 
 
@@ -236,4 +238,34 @@ public class MainListActivity extends AppCompatActivity {
         super.onStop();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_single_game, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+PrefFragment prefFragment = new PrefFragment();
+transaction.add(R.id.prefFragment, prefFragment);
+transaction.commit();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

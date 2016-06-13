@@ -43,11 +43,12 @@ public class StatFragment extends Fragment {
 
     }
 
-    public static StatFragment newInstance() {
-        StatFragment fragment = new StatFragment();
-        //Bundle args = new Bundle();
-        //fragment.setArguments(args);
-        return fragment;
+    public static StatFragment newInstance(GameListItem mGameListItem) {
+        StatFragment mStatFragment = new StatFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("GameListItem", mGameListItem);
+        mStatFragment.setArguments(args);
+        return mStatFragment;
     }
 
     @Override

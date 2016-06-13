@@ -1,7 +1,6 @@
 package com.greativy.leo14;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -44,6 +41,16 @@ public class RoundFragment extends Fragment {
     private static final int SCORE = 1;
     private int mDatasetTypes[] = {PLAYER, SCORE}; //view types
 
+    public static RoundFragment newInstance(GameListItem mGameListItem) {
+        RoundFragment roundFragment = new RoundFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("GameListItem", mGameListItem);
+        roundFragment.setArguments(args);
+        Log.i("RoundFragment", "newInstance1");
+
+        return roundFragment;
+    }
+
 
 
     /**
@@ -69,19 +76,19 @@ public class RoundFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("onCreate", "logC");
+        Log.i("RoundFragment", "onCreate");
 
         if (getArguments() != null) {
-            Log.i("log", "logD");
+            Log.i("get argument", "have argument");
 
             bundle = getArguments();
             mGameListItem = (GameListItem) bundle.getSerializable(KEY_GAMELISTITEM);
-
             gameTitle = mGameListItem.getGameTitle();
             player1 = mGameListItem.getPlayer1();
             player2 = mGameListItem.getPlayer2();
             player3 = mGameListItem.getPlayer3();
             player4 = mGameListItem.getPlayer4();
+            Log.i("RoundFragment", "onCreate");
 
 
         }
@@ -91,11 +98,12 @@ public class RoundFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_b_list, container, false);
+        Log.i("RoundFragment", "onCreateView");
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_sgame);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_singleGame);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -104,8 +112,7 @@ public class RoundFragment extends Fragment {
             if (singleGameDAO.getCount() == 0) {
                 singleGameDAO.sample();
             }
-            /** TODO:can't getAll by gameId
-             */
+
             Log.i("RoundFragment", "total game is " + String.valueOf(singleGameDAO.getCount()));
             items = singleGameDAO.getAllByGameId(mGameListItem.getId());
             Log.i("RoundFragment", " in Game " + mGameListItem.getId());
@@ -136,6 +143,8 @@ public class RoundFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.i("RoundFragment", "onAttach");
+
         if (context instanceof OnItemClickListener) {
             mListener = (OnItemClickListener) context;
         } else {
@@ -147,6 +156,8 @@ public class RoundFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.i("RoundFragment", "onDetach");
+
         mListener = null;
     }
 
@@ -167,13 +178,13 @@ public class RoundFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("tabBFragment", "onResume");
+        Log.i("RoundFragment", "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("tabBFragment", "onPause");
+        Log.i("RoundFragment", "onPause");
     }
 
     @Override
@@ -193,9 +204,14 @@ public class RoundFragment extends Fragment {
 
              Log.i("SGitem Condition fail", "fail");
              } */
-            Log.i("tabBFragment", "setUserVisibleHint Trigger");
+            Log.i("RoundFragment", "setUserVisibleHint Trigger");
 
 
         }
     }
+
+
+
+
+
 }
