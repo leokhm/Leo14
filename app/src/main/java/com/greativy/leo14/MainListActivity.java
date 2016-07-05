@@ -1,16 +1,15 @@
 package com.greativy.leo14;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-public class MainListActivity extends AppCompatActivity {
+public class MainListActivity extends AppCompatActivity implements MainListFragment.OnFragmentInteractionListener {
     //delete declaration with-tempgamelist
     //private ArrayAdapter<String> arrayListAdapter;
     //private ArrayList<String> listData = new ArrayList<>();
@@ -33,8 +32,7 @@ public class MainListActivity extends AppCompatActivity {
     private GameListDAO gameListDAO;
     private List<GameListItem> items;
     private GameListAdapter gameListAdapter;
-    private SwipeRefreshLayout refreshLayout;
-    private final int splashTime = 1000;
+
     private GameListRecyclerAdapter gameListRecyclerAdapter;
     private RecyclerView recyclerView;
 
@@ -50,78 +48,18 @@ public class MainListActivity extends AppCompatActivity {
         fab();
         //OnItemLongClick();
         //OnItemClick();
-        RecyclerGameList();
-        swipeRefresh();
+        //swipeRefresh();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        // 创建线性布局管理器（默认是垂直方向）
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        // 为RecyclerView指定布局管理对象
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        // 创建Adapter
-        gameListDAO = new GameListDAO(getApplicationContext());
-        if (gameListDAO.getCount() == 0) {
-            gameListDAO.sample();
-        }
-        items = gameListDAO.getAll();
-        gameListRecyclerAdapter = new GameListRecyclerAdapter(items, new GameListRecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void clickOnView(View v, int position) {
-                GameListItem item = items.get(position);
-
-                //Snackbar.make(v, "test", Snackbar.LENGTH_LONG).show();
-
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("GameListItem", item);
-                intent.putExtras(bundle);
-                intent.putExtra("position", position);
-                intent.setClass(MainListActivity.this, SingleGameActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
-        // 填充Adapter
-        //disable divider
-        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.LIST_VERTICAL);
-        //recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapter(gameListRecyclerAdapter);
-        /*gameListRecyclerAdapter.SetOnItemClickListener(new GameListRecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                //do something with position
-            }
-        });
-        */
-
+        Fragment mainListFragment = new MainListFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.MainActivity, mainListFragment,"first");
+        ft.commit();
 
 
     }
 
-    private void swipeRefresh() {
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        refreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Handler h = new Handler();
-                Runnable r = new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.setRefreshing(false);
 
-                    }
-                };
-                h.postDelayed(r, splashTime);
-            }
-        });
-    }
-
-    private void RecyclerGameList() {
-
-    }
 
     public void OnItemClick() {
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
@@ -255,11 +193,7 @@ public class MainListActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-PrefFragment prefFragment = new PrefFragment();
-transaction.add(R.id.prefFragment, prefFragment);
-transaction.commit();
+
 
             return true;
         }
@@ -268,4 +202,8 @@ transaction.commit();
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

@@ -108,7 +108,6 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
     @Override
     public int getItemCount()
     {
-
         return mItems.size();
     }
     //  删除指定的Item

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by leokh on 4/30/2016.
  */
 public class GameListDAO {
-    private static final String TABLE_NAME = "gamelistitem";
+    public static final String TABLE_NAME = "gamelistitem";
     private static final String KEY_ID = "_id";
     private static final String GAME_TITLE = "gametitle";
     private static final String CREATE_TIME = "createtime";

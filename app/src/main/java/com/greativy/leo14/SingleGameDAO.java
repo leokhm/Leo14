@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SingleGameDAO {
 
-    private static final String TABLE_SGAME = "singlegameitem";
+    public static final String TABLE_SGAME = "singlegameitem";
     private static final String KEY_ID = "_sgid";
     private static final String GAME_ID = "gameid";
     private static final String GAMETYPE = "gametype";
