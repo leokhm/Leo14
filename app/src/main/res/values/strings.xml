@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Leo no 14</string>
+    <string name="app_name">LeoDroid</string>
     <string name="cover">Never Settle</string>
     <string name="title_activity_main_list">MainListActivity</string>
     <string name="NewGame">New Game</string>
@@ -31,6 +31,15 @@
     <string name="new_round">New Round</string>
     <string name="score_level_unit">Fan</string>
     <string name="score_type">Type</string>
+    <string name="point1">Point 1</string>
+    <string name="point2">Point 2</string>
+    <string name="point3">Point 3</string>
+    <string name="point4">Point 4</string>
+    <string name="point5">Point 5</string>
+    <string name="point6">point6</string>
+    <string name="point7">Point 7</string>
+    <string name="summary_min_point">Input the minimum point: 1-13</string>
+    <string name="summary_max_point">Input maximum point: 1-13</string>
     <string-array name="fans">
         <item>1</item>
         <item>2</item>

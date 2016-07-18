@@ -1,7 +1,6 @@
 package com.greativy.leo14;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,14 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import android.os.Handler;
 
 public class SingleGameActivity extends AppCompatActivity implements StatFragment.OnFragmentInteractionListener, RoundFragment.OnItemClickListener, NewRoundDialogFragment.OnItemSubmitListener {
 
@@ -162,7 +158,7 @@ public class SingleGameActivity extends AppCompatActivity implements StatFragmen
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tab_a, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_stat, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 

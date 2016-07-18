@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +49,8 @@ public class NewGameActivity extends AppCompatActivity {
             gameListItem = new GameListItem();
         }
         setSupportActionBar(toolbar);
+
+
 
 
     }
@@ -160,7 +164,5 @@ public class NewGameActivity extends AppCompatActivity {
 
     }
 
-    public void toolbar1() {
 
-    }
 }

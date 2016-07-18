@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class RoundFragment extends Fragment {
 
     OnItemClickListener mListener;
     private List<SingleGameItem> items;
-    private SingleGameDAO singleGameDAO;
+    private SingleGameDAO mSingleGameDAO;
     private RoundListRecyclerViewAdapter roundListRecyclerViewAdapter;
     private GameListItem mGameListItem;
     private String KEY_GAMELISTITEM = "GameListItem";
@@ -50,7 +51,6 @@ public class RoundFragment extends Fragment {
 
         return roundFragment;
     }
-
 
 
     /**
@@ -97,7 +97,7 @@ public class RoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_b_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_round_list, container, false);
         Log.i("RoundFragment", "onCreateView");
 
         // Set the adapter
@@ -107,32 +107,30 @@ public class RoundFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-            singleGameDAO = new SingleGameDAO(getActivity().getApplicationContext());
-            if (singleGameDAO.getCount() == 0) {
-                singleGameDAO.sample();
+            mSingleGameDAO = new SingleGameDAO(getActivity().getApplicationContext());
+            if (mSingleGameDAO.getCount() == 0) {
+                mSingleGameDAO.sample();
             }
 
-            Log.i("RoundFragment", "total game is " + String.valueOf(singleGameDAO.getCount()));
-            items = singleGameDAO.getAllByGameId(mGameListItem.getId());
+            Log.i("RoundFragment", "total game is " + String.valueOf(mSingleGameDAO.getCount()));
+            items = mSingleGameDAO.getAllByGameId(mGameListItem.getId());
             Log.i("RoundFragment", " in Game " + mGameListItem.getId());
             Log.i("RoundFragment", " Game " + mGameListItem.getId() + " has items " + items.size());
 
 
-            roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, new RoundListRecyclerViewAdapter.OnItemClickListener() {
+            roundListRecyclerViewAdapter = new RoundListRecyclerViewAdapter(mGameListItem, items, mSingleGameDAO, new RoundListRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void clickOnView(View v, int position) {
                     SingleGameItem item = items.get(position);
-                    Snackbar.make(v, "test", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, "test on click from clickonView", Snackbar.LENGTH_LONG).show();
                 }
-
-
-
             });
             mListener.onListFragmentInteraction(items);
 
 
             recyclerView.setAdapter(roundListRecyclerViewAdapter);
+
+
         }
 
 
@@ -209,9 +207,6 @@ public class RoundFragment extends Fragment {
 
         }
     }
-
-
-
 
 
 }

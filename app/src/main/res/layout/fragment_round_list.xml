@@ -12,4 +12,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.greativy.leo14.RoundFragment"
-    tools:listitem="@layout/fragment_tab_b_scores" />
+    tools:listitem="@layout/fragment_round_scores" />

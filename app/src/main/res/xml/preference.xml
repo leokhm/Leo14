@@ -1,106 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Fan and Amount">
-        <MultiSelectListPreference
-            android:title="Multi select list preference"
-            android:defaultValue="@array/fans"
-            android:entries="@array/fans"
-            android:entryValues="@array/fans"
-            android:key="multi_select_list_preference_1" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="minFan"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Min Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="maxFan"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Max Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="1st Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan2"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="2nd Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan3"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="3rd Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan4"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="4th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan5"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="5th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan6"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="6th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan7"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="7th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan8"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="8th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan9"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="9th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan10"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="10th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan11"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="11th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan12"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="12th Score" />
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="fan13"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="13th Score" />
+    <PreferenceCategory
+        android:layout="@layout/preference_category_material"
+        android:title="Max/Min Point">
 
-
-
+        <EditTextPreference
+            android:defaultValue="1"
+            android:key="minPoint"
+            android:layout="@layout/preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/summary_min_point"
+            android:title="Min Point" />
+        <EditTextPreference
+            android:defaultValue="10"
+            android:key="maxPoint"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/summary_max_point"
+            android:title="Max Point" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_category_material"
+        android:title="Point and Amount">
+        <EditTextPreference
+            android:defaultValue="1"
+            android:key="point1"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="%s no use"
+            android:title="lv1 Point" />
+        <EditTextPreference
+            android:defaultValue="4"
+            android:key="point2"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv2 Point" />
+        <EditTextPreference
+            android:defaultValue="8"
+            android:key="point3"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv3 Point" />
+        <EditTextPreference
+            android:defaultValue="16"
+            android:key="point4"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv4 Point" />
+        <EditTextPreference
+            android:defaultValue="24"
+            android:key="point5"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv5 Point" />
+        <EditTextPreference
+            android:defaultValue="36"
+            android:key="point6"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv6 Point" />
+        <EditTextPreference
+            android:defaultValue="48"
+            android:key="point7"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv7 Point" />
+        <EditTextPreference
+            android:defaultValue="64"
+            android:key="point8"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv8 Point" />
+        <EditTextPreference
+            android:defaultValue="80"
+            android:key="point9"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv9 Point" />
+        <EditTextPreference
+            android:defaultValue="128"
+            android:key="point10"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv10 Point" />
+        <EditTextPreference
+            android:defaultValue="156"
+            android:key="point11"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv11 Point" />
+        <EditTextPreference
+            android:defaultValue="192"
+            android:key="point12"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv12 Point" />
+        <EditTextPreference
+            android:defaultValue="256"
+            android:key="point13"
+            android:layout="@layout/my_preference_material"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="lv13 Point" />
     </PreferenceCategory>
 
 </PreferenceScreen>

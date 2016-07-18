@@ -37,7 +37,7 @@ public class CustomNumberPicker extends android.widget.NumberPicker {
 
     private void updateView(View view) {
         if (view instanceof EditText) {
-            ((EditText) view).setTextSize(14);
+            ((EditText) view).setTextSize(16);
             ((EditText) view).setTextColor(getResources().getColor(R.color.colorPrimary));
         }
     }

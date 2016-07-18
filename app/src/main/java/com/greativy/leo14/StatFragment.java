@@ -66,10 +66,10 @@ public class StatFragment extends Fragment {
             player2 = mGameListItem.getPlayer2();
             player3 = mGameListItem.getPlayer3();
             player4 = mGameListItem.getPlayer4();
-            p1FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p1rscore", gameId).toString();
-            p2FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p2rscore", gameId).toString();
-            p3FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p3rscore", gameId).toString();
-            p4FinalScore = getString(R.string.moneySign) + " " + mSingleGameDAO.getColScoreSumByGameId("p4rscore", gameId).toString();
+            p1FinalScore = getString(R.string.moneySign) + " " + String.valueOf(mSingleGameDAO.getScoreSumByPlayerByGameId("p1rscore", gameId));
+            p2FinalScore = getString(R.string.moneySign) + " " + String.valueOf(mSingleGameDAO.getScoreSumByPlayerByGameId("p2rscore", gameId));
+            p3FinalScore = getString(R.string.moneySign) + " " + String.valueOf(mSingleGameDAO.getScoreSumByPlayerByGameId("p3rscore", gameId));
+            p4FinalScore = getString(R.string.moneySign) + " " + String.valueOf(mSingleGameDAO.getScoreSumByPlayerByGameId("p4rscore", gameId));
 
             //mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -80,20 +80,18 @@ public class StatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_tab_a, container, false);
+        View view = inflater.inflate(R.layout.fragment_stat, container, false);
 
-        TextView tv_gameTitle = (TextView) view.findViewById(R.id.tv_DGameTitle);
-        TextView tv_player1 = (TextView) view.findViewById(R.id.tv_DPlayer1);
-        TextView tv_player2 = (TextView) view.findViewById(R.id.tv_DPlayer2);
-        TextView tv_player3 = (TextView) view.findViewById(R.id.tv_DPlayer3);
-        TextView tv_player4 = (TextView) view.findViewById(R.id.tv_DPlayer4);
-        TextView tv_player1FinalScore = (TextView) view.findViewById(R.id.tv_DPlayer1FinalScore);
-        TextView tv_player2FinalScore = (TextView) view.findViewById(R.id.tv_DPlayer2FinalScore);
-        TextView tv_player3FinalScore = (TextView) view.findViewById(R.id.tv_DPlayer3FinalScore);
-        TextView tv_player4FinalScore = (TextView) view.findViewById(R.id.tv_DPlayer4FinalScore);
+        TextView tv_player1 = (TextView) view.findViewById(R.id.tv_tbPlayer1);
+        TextView tv_player2 = (TextView) view.findViewById(R.id.tv_tbPlayer2);
+        TextView tv_player3 = (TextView) view.findViewById(R.id.tv_tbPlayer3);
+        TextView tv_player4 = (TextView) view.findViewById(R.id.tv_tbPlayer4);
+        TextView tv_player1FinalScore = (TextView) view.findViewById(R.id.tv_tbScore1);
+        TextView tv_player2FinalScore = (TextView) view.findViewById(R.id.tv_tbScore2);
+        TextView tv_player3FinalScore = (TextView) view.findViewById(R.id.tv_tbScore3);
+        TextView tv_player4FinalScore = (TextView) view.findViewById(R.id.tv_tbScore4);
 
 
-        tv_gameTitle.setText(gameTitle);
         tv_player1.setText(player1);
         tv_player2.setText(player2);
         tv_player3.setText(player3);

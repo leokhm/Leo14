@@ -1,11 +1,11 @@
 package com.greativy.leo14;
 
+import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -15,11 +15,12 @@ import java.util.Locale;
 /**
  * Created by leokh on 5/7/2016.
  */
-public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecyclerAdapter.ViewHolder>{
+public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecyclerAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void clickOnView(View v, int position);
     }
+
     public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mListener = mItemClickListener;
     }
@@ -32,9 +33,14 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
         this.mListener = mListener;
     }
 
+    public GameListRecyclerAdapter(List<GameListItem> mItems) {
+        this.mItems = mItems;
+    }
+
+
     //onCreateViewHolder 建立 view，並將 view 轉成 ViewHolder
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int i){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         View dataView = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_game_list, parent, false);
@@ -53,8 +59,7 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
 
     //後者將 data 顯示在 view 中
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position)
-    {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         //  获取当前item中显示的数据
         GameListItem item = mItems.get(position);
         //viewHolder.gameTitleView.setText(String.valueOf(position));
@@ -72,8 +77,7 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
     }
 
     //先在 ContactsAdapter 中加入 ViewHolder;  ViewHolder pattern 在 ListView 時已有，不過可選擇不使用，而 RecyclerView.Adapter 強制使用。
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView gameTitleView;
         public TextView p1NameView;
         public TextView p2NameView;
@@ -81,8 +85,7 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
         public TextView p4NameView;
         public TextView CreateTimeView;
 
-        public ViewHolder(View itemView, OnItemClickListener mListener)
-        {
+        public ViewHolder(View itemView, OnItemClickListener mListener) {
             super(itemView);
 
             gameTitleView = (TextView) itemView.findViewById(R.id.tv_GameTitle);
@@ -93,37 +96,72 @@ public class GameListRecyclerAdapter extends RecyclerView.Adapter<GameListRecycl
             CreateTimeView = (TextView) itemView.findViewById(R.id.tv_Date);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View v) {
             if (mListener != null) {
                 mListener.clickOnView(v, getPosition());
+                Snackbar.make(v, "test onclick ", Snackbar.LENGTH_LONG).show();
+
             }
+
         }
 
 
     }
 
 
-
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mItems.size();
     }
+
     //  删除指定的Item
-    public void removeData(int position)
-    {
-        //sampleData.remove(position);
+    public void removeData(int position) {
+        //sampleData.onItemDismiss(position);
         //  通知RecyclerView控件某个Item已经被删除
         notifyItemRemoved(position);
 
     }
+
     //  在指定位置添加一个新的Item
-    public void addItem(int positionToAdd)
-    {
+    public void addItem(int positionToAdd) {
         //ampleData.add(positionToAdd,new SampleModel("新的列表项" + new Random().nextInt(10000)));
         //  通知RecyclerView控件插入了某个Item
         notifyItemInserted(positionToAdd);
+    }
+
+    public void onItemDismiss(int position, Context c, RecyclerView recyclerView) {
+
+        GameListItem gameListItem = mItems.get(position);
+        mItems.remove(position);
+        GameListDAO gameListDAO = new GameListDAO(c.getApplicationContext());
+        SingleGameDAO singleGameDAO = new SingleGameDAO(c.getApplicationContext());
+        long gameId = gameListItem.getId();
+        int roundBegin = singleGameDAO.countRoundByGameId(gameId);
+        int roundDeleted = singleGameDAO.deleteRoundByGameId(gameId);
+        int roundAfter = singleGameDAO.countRoundByGameId(gameId);
+
+        gameListDAO.delete(gameId);
+        this.notifyItemRemoved(position);
+
+        Snackbar snackbar = Snackbar
+                .make(recyclerView, "GAME REMOVED & " + roundBegin+"/"+roundDeleted+"/"+roundAfter + " ROUND" , Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        /*
+                        int mAdapterPosition = viewHolder.getAdapterPosition();
+                        photos.add(mAdapterPosition, mPhoto);
+                        notifyItemInserted(mAdapterPosition);
+                        recyclerView.scrollToPosition(mAdapterPosition);
+                        photosToDelete.remove(mPhoto);
+                        */
+                    }
+                });
+        snackbar.show();
+
+
     }
 
 

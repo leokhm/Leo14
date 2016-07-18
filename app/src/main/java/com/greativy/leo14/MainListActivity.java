@@ -1,30 +1,30 @@
 package com.greativy.leo14;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceFragment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.List;
 
-public class MainListActivity extends AppCompatActivity implements MainListFragment.OnFragmentInteractionListener {
+public class MainListActivity extends AppCompatActivity implements MainListFragment.OnFragmentInteractionListener, NewGameFragment.OnFragmentInteractionListener {
     //delete declaration with-tempgamelist
     //private ArrayAdapter<String> arrayListAdapter;
     //private ArrayList<String> listData = new ArrayList<>();
@@ -33,12 +33,11 @@ public class MainListActivity extends AppCompatActivity implements MainListFragm
     private List<GameListItem> items;
     private GameListAdapter gameListAdapter;
 
-    private GameListRecyclerAdapter gameListRecyclerAdapter;
-    private RecyclerView recyclerView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("onCreate", "MainListActivity OnCreate");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
@@ -49,16 +48,29 @@ public class MainListActivity extends AppCompatActivity implements MainListFragm
         //OnItemLongClick();
         //OnItemClick();
         //swipeRefresh();
+        if (savedInstanceState == null) {
+            Fragment mainListFragment = new MainListFragment();
+            Fragment getRoundScore = new GetRoundScore();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.add(R.id.mainlistfragement, mainListFragment, "MainListFragment")
+                    .add(getRoundScore, "GET_ROUND_SCORE_TAG") //create non-UI fragment GetRoundScore
+                    .commit();
+        }
 
-        Fragment mainListFragment = new MainListFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.MainActivity, mainListFragment,"first");
-        ft.commit();
+
+        SharedPreferences preference = getSharedPreferences(
+                PrefFragment.PREFERENCES_NAME, Activity.MODE_PRIVATE);
+        String name = preference.getString("point10","");
+        Log.i("point 10 is", name);
+        TextView v = (TextView) findViewById(R.id.tv_testing);
+        v.setText(name);
+
+
 
 
     }
-
 
 
     public void OnItemClick() {
@@ -123,21 +135,37 @@ public class MainListActivity extends AppCompatActivity implements MainListFragm
     private void toolbar1() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setIcon(R.drawable.ic_add_white_24dp);
     }
 
     private void fab() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent("com.greativy.leo14.ADD_ITEM");
-                startActivityForResult(intent, 0);
+                Bundle bundle = new Bundle();
+                bundle.putInt("type",1);
+
+
+
+                Fragment newGameFragment = new NewGameFragment();
+                newGameFragment.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.mainlistfragement, newGameFragment, "NewGameFragment");
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+                ft.commit();
+                //fab.setVisibility(View.INVISIBLE);
+
+                //Intent intent = new Intent("com.greativy.leo14.ADD_ITEM");
+                //startActivityForResult(intent, 0);
 
             }
         });
 
     }
-
+    /* depreciate to use fragment
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             GameListItem item = (GameListItem) data.getExtras().getSerializable(
@@ -164,6 +192,7 @@ public class MainListActivity extends AppCompatActivity implements MainListFragm
 
         }
     }
+    */
 
     @Override
     public void onStart() {
@@ -193,6 +222,13 @@ public class MainListActivity extends AppCompatActivity implements MainListFragm
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            Fragment prefFragment = new PrefFragment();
+            ft.replace(R.id.mainlistfragement, prefFragment,"prefFragment");
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(null);
+            ft.commit();
 
 
             return true;

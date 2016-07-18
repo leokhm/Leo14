@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +19,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainListFragment extends Fragment {
 
 
@@ -42,20 +33,10 @@ public class MainListFragment extends Fragment {
     private final int splashTime = 1000;
 
 
-
     public MainListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainListFragment newInstance(String param1, String param2) {
         MainListFragment fragment = new MainListFragment();
         Bundle args = new Bundle();
@@ -104,12 +85,14 @@ public class MainListFragment extends Fragment {
                 bundle.putSerializable("GameListItem", item);
                 intent.putExtras(bundle);
                 intent.putExtra("position", position);
-                //intent.setClass(MainListActivity.this, SingleGameActivity.class);
+                intent.setClass(getActivity(), SingleGameActivity.class);
                 startActivity(intent);
 
 
-            }
-        });
+            }});
+
+
+
         // 填充Adapter
         //disable divider
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.LIST_VERTICAL);
@@ -123,9 +106,14 @@ public class MainListFragment extends Fragment {
         });
         */// Inflate the layout for this fragment
 
+        ItemTouchHelper.Callback callback =  new GameListSwipeHelper(gameListRecyclerAdapter, getActivity().getApplicationContext(), recyclerView);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(recyclerView);
+
+
+
         return view;
     }
-
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -178,6 +166,7 @@ public class MainListFragment extends Fragment {
                     @Override
                     public void run() {
                         refreshLayout.setRefreshing(false);
+                        gameListRecyclerAdapter.notifyDataSetChanged();
 
                     }
                 };

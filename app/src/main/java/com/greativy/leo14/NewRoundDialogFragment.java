@@ -2,9 +2,10 @@ package com.greativy.leo14;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,6 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class NewRoundDialogFragment extends DialogFragment {
     OnItemSubmitListener mListener;
@@ -28,7 +27,7 @@ public class NewRoundDialogFragment extends DialogFragment {
     private GameListItem mGameListItem;
     private SingleGameItem mSingleGameItem;
     private SingleGameDAO mSingleGameDAO;
-    private getRoundScore mGetRoundScore;
+    private GetRoundScore mGetRoundScore;
     private Bundle bundle;
     private String player1;
     private String player2;
@@ -105,10 +104,15 @@ public class NewRoundDialogFragment extends DialogFragment {
                 ScoreTypeValue = numberPicker_scoreType.getValue();
                 ScoreValue = numberPicker_score.getValue();
                 Toast.makeText(getContext(), "Player" + NameValue + 1 + " " + scoreType[ScoreTypeValue]  + " Player " + Name2Value+1+ " with Score "+ scoreLevel[ScoreValue], Toast.LENGTH_LONG).show();
-                mGetRoundScore = new getRoundScore();
+                mGetRoundScore = new GetRoundScore();
                 mSingleGameItem = mGetRoundScore.getResult(gameId, ScoreTypeValue, NameValue, Name2Value, ScoreValue, mSingleGameDAO);
                 mListener.onDialogFragmentInteraction(mSingleGameItem);
                 //mRoundListRecyclerViewAdapter.notifyItemInserted(mSingleGameDAO.getAll().size()+1);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                String maxPoint = sharedPreferences.getString("maxPoint","10");
+                String minPoint = sharedPreferences.getString("minPoint","1");
+                Toast.makeText(getContext(), "maxpoint is "+maxPoint+"and minpoint is "+ minPoint, Toast.LENGTH_LONG).show();
+
 
                 dismiss();
 

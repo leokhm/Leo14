@@ -129,36 +129,79 @@ public class SingleGameDAO {
     /**
      * TODO get all column score sum by player
      */
-    public Integer getAllColumnScoreSum(String selectedColumn) {
+    public int getAllColumnScoreSum(String selectedColumn) {
         String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        Integer total = cursor.getInt(cursor.getColumnIndex("myTotal"));
+        int total = cursor.getInt(cursor.getColumnIndex("myTotal"));
         Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
         cursor.close();
         return total;
     }
 
-    public Integer getColScoreSumByGameId(String selectedColumn, long gameId) {
+    public int getScoreSumByPlayerByGameId(String selectedColumn, long gameId) {
         String selectQuery = "SELECT SUM(" + selectedColumn + ") As myTotal FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Integer total;
+        int total=0;
         if (cursor != null && cursor.moveToFirst()) {
 
             total = cursor.getInt(cursor.getColumnIndex("myTotal"));
             Log.i("SingleGameDAO", "getAllColumnScoreSum total is " + total);
             cursor.moveToFirst();
             cursor.close();
-        } else {
-            total = 0;
+        }
+
+        return total;
+    }
+
+    public int deleteRoundByGameId(long gameId) {
+        String selectQuery = "SELECT * FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        int totalDeleted =0;
+        if (cursor != null && cursor.moveToFirst()) {
+            cursor.moveToFirst();
+
+            //SingleGameItem mSingleGameItem = new SingleGameItem();
+            do {
+                String location = GAME_ID + "=" + gameId;
+                db.delete(TABLE_SGAME, location, null);
+                totalDeleted++;
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        /*alternative approach
+
+        String selectQuery = "DELETE FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+         */
+
+
+        return totalDeleted;
+    }
+
+    public int countRoundByGameId(long gameId) {
+        String selectQuery2 = "SELECT COUNT(gameId) As myTotal FROM " + TABLE_SGAME + " where " + GAME_ID + " = '" + gameId + "'";
+        Cursor cursor = db.rawQuery(selectQuery2,null);
+        int total = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+
+            total = cursor.getInt(cursor.getColumnIndex("myTotal"));
+            Log.i("SingleGameDAO", "countRoundByGameId total is " + total);
+            cursor.moveToFirst();
+            cursor.close();
         }
         return total;
     }
 
 
-    public SingleGameItem get(long id) {
+
+
+        public SingleGameItem get(long id) {
         SingleGameItem item = null;
         String location = KEY_ID + "=" + id;
         Cursor cursor = db.query(TABLE_SGAME, null, location, null, null, null, null, null);

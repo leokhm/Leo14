@@ -126,9 +126,11 @@ public class GameListDAO {
         List<GameListItem> result = new ArrayList<>();
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null);
         cursor.moveToLast();
-        while (cursor.moveToPrevious()) {
+        do {result.add(getRecord(cursor));}
+        while (cursor.moveToPrevious());
+        /*while (cursor.moveToPrevious()) {
             result.add(getRecord(cursor));
-        }
+        }*/
         cursor.close();
         return result;
 
@@ -158,18 +160,18 @@ public class GameListDAO {
 
     public void sample() {
 
-        GameListItem item1 = new GameListItem(0, "Game 1", new Date().getTime(), new Date().getTime(), "G1Player1ddddddddddd", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item2 = new GameListItem(1, "Game 2", new Date().getTime(), new Date().getTime(), "G2Player1", "Player2ddddddddddddd", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item3 = new GameListItem(2, "Game 3", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item4 = new GameListItem(3, "Game 4", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item5 = new GameListItem(4, "Game 5", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item6 = new GameListItem(5, "Game 6", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item7 = new GameListItem(6, "Game 7", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item8 = new GameListItem(7, "Game 8", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item9 = new GameListItem(8, "Game 9", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item10 = new GameListItem(9, "Game 10", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item11 = new GameListItem(10, "Game 11", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
-        GameListItem item12 = new GameListItem(11, "Game 12", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item1 = new GameListItem(0, "MJ 1", new Date().getTime(), new Date().getTime(), "G1Player1ddddddddddd", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item2 = new GameListItem(1, "MJ 2", new Date().getTime(), new Date().getTime(), "G2Player1", "Player2ddddddddddddd", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item3 = new GameListItem(2, "MJ 3", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item4 = new GameListItem(3, "MJ 4", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item5 = new GameListItem(4, "MJ 5", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item6 = new GameListItem(5, "MJ 6", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item7 = new GameListItem(6, "MJ 7", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item8 = new GameListItem(7, "MJ 8", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item9 = new GameListItem(8, "MJ 9", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item10 = new GameListItem(9, "MJ 10", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item11 = new GameListItem(10, "MJ 11", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
+        GameListItem item12 = new GameListItem(11, "MJ 12", new Date().getTime(), new Date().getTime(), "G3Player1", "Player2", "Player3", "player4", 0, 0, 0, 0);
 
         insert(item1);
         insert(item2);
